@@ -1,6 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
+
+import Container from '../components/container';
 
 import { Firebase, Spotify } from '../helpers';
+
+const Content = styled.div`
+  height: 100%;
+  width: 100%;
+`;
 
 const User = ({ match }) => {
   const [error, setError] = React.useState(undefined);
@@ -35,20 +43,20 @@ const User = ({ match }) => {
     }
   }, [match.params.userId]);
 
-  if (error) {
-    return <p>error</p>;
-  }
-
-  if (user) {
-    return (
-      <div>
-        <h1>{user.username}</h1>
-        {spotifyNowPlaying && <p>{spotifyNowPlaying.title}</p>}
-      </div>
-    );
-  }
-
-  return <div>Loading....</div>;
+  return (
+    <Container>
+      <Content>
+        {!error && !user && <p>Loading...</p>}
+        {error && <p>error</p>}
+        {user && (
+          <>
+            <h1>{user.username}</h1>
+            {spotifyNowPlaying && <p>{spotifyNowPlaying.title}</p>}
+          </>
+        )}
+      </Content>
+    </Container>
+  );
 };
 
 export default User;

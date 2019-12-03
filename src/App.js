@@ -12,7 +12,7 @@ import { Firebase } from './helpers';
 Firebase.initialize();
 
 const App = () => (
-  <div className="App">
+  <>
     <Header />
     <Router>
       <Switch>
@@ -22,7 +22,7 @@ const App = () => (
         <Route path="*" component={() => <p>no match</p>} />
       </Switch>
     </Router>
-  </div>
+  </>
 );
 
 export default App;
