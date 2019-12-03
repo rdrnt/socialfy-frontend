@@ -3,7 +3,7 @@ const config = {
   colors: {
     primary: '#03ba4e',
     secondary: '#4b98f8',
-    background: '#fefffe',
+    background: '#000',
     backgroundSecondary: '#eeefee',
     text: '',
   },

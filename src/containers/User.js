@@ -2,17 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Container from '../components/container';
+import Text from '../components/Text';
 
 import { Firebase, Spotify } from '../helpers';
+import config from '../config';
 
 const Content = styled.div`
-  height: 100%;
+  height: 150vh;
   width: 100%;
 `;
 
+const UserProfileName = styled.div`
+  position: sticky;
+  top: 80px;
+  left: 0;
+  height: 70px;
+  border-bottom: 1px solid red;
+  width: 100%;
+  background-color: ${config.colors.background};
+`;
+
 const User = ({ match }) => {
-  const [error, setError] = React.useState(undefined);
   const [user, setUser] = React.useState(undefined);
+  const [userNotFound, setUserNotFound] = React.useState(false);
 
   const [spotifyNowPlaying, setSpotifyNowPlaying] = React.useState(undefined);
   const [spotifyRecentlyPlayed, setSpotifyRecentlyPlayed] = React.useState(
@@ -40,18 +52,26 @@ const User = ({ match }) => {
 
     if (username) {
       fetchUser(username);
+    } else if (!username) {
+      setUserNotFound(true);
     }
   }, [match.params.userId]);
 
   return (
     <Container>
       <Content>
-        {!error && !user && <p>Loading...</p>}
-        {error && <p>error</p>}
+        {!userNotFound && !user && <h1>Loading...</h1>}
+        {userNotFound && <h1>No user</h1>}
         {user && (
           <>
-            <h1>{user.username}</h1>
-            {spotifyNowPlaying && <p>{spotifyNowPlaying.title}</p>}
+            <UserProfileName>
+              <Text type="h1" as="h3">
+                {user.username}
+              </Text>
+            </UserProfileName>
+            <div>
+              <Text as="p">Howdy</Text>
+            </div>
           </>
         )}
       </Content>
