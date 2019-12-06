@@ -85,7 +85,12 @@ const User = ({ match }) => {
 
             <div>
               {spotifyNowPlaying ? (
-                <NowPlaying image={{ large: {} }} />
+                <NowPlaying
+                  title={spotifyNowPlaying.title}
+                  artists={spotifyNowPlaying.artist}
+                  album={spotifyNowPlaying.album}
+                  image={{ large: spotifyNowPlaying.imageUrl }}
+                />
               ) : (
                 <Text as="p">Nothing playing</Text>
               )}

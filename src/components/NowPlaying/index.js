@@ -3,20 +3,21 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Container from '../container';
+import Text from '../Text';
 
 const DESKTOP_HEIGHT = 400;
 
 const MOBILE_HEIGHT = 400;
 
 const Content = styled.div`
-  background-color: blue;
+  border-bottom: 1px blue solid;
   height: 400px;
   width: 100%;
 
-  > div {
-    height: 100%;
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 `;
 
 const AlbumArt = styled.img`
@@ -25,10 +26,31 @@ const AlbumArt = styled.img`
   background-color: red;
 `;
 
-const NowPlaying = ({ image }) => {
+const SongInfo = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  margin-left: 20px;
+
+  > p {
+    margin-top: 10px;
+  }
+`;
+
+const NowPlaying = ({ title, artists, album, image }) => {
   return (
     <Content>
       <AlbumArt src={image.large} alt="album art" />
+      <SongInfo>
+        <Text as="h2">{title}</Text>
+        <Text as="h5">{artists}</Text>
+        <Text as="p" weight={400}>
+          {album}
+        </Text>
+      </SongInfo>
     </Content>
   );
 };

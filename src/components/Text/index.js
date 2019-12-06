@@ -27,8 +27,12 @@ export const DefaultTextStyles = {
   h4: css`
     font-size: 27px;
   `,
-  h5: css``,
-  h6: css``,
+  h5: css`
+    font-size: 23px;
+  `,
+  h6: css`
+    font-size: 19px;
+  `,
   p: css`
     font-size: 16px;
   `,
