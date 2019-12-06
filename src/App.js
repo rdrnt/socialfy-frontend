@@ -8,6 +8,7 @@ import User from './containers/User';
 import Header from './components/header';
 
 import { Firebase } from './helpers';
+import config from './config';
 
 Firebase.initialize();
 
@@ -16,9 +17,9 @@ const App = () => (
     <Header />
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path={['/auth', '/auth/:status']} component={Auth} />
-        <Route path="/user/:userId" component={User} />
+        <Route exact path={config.routes.HOME} component={Home} />
+        <Route path={config.routes.AUTH} component={Auth} />
+        <Route path="/:userId" component={User} />
         <Route path="*" component={() => <p>no match</p>} />
       </Switch>
     </Router>

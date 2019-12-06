@@ -7,6 +7,15 @@ const config = {
     backgroundSecondary: '#eeefee',
     text: '',
   },
+  routes: {
+    HOME: '/',
+    AUTH: '/auth',
+  },
+  breakpoints: {
+    desktop: 1024,
+    tablet: 768,
+    mobile: 376,
+  },
 };
 
 export default config;

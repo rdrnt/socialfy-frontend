@@ -2,11 +2,17 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-const DefaultTextStyles = {
+import { Style } from '../../helpers';
+
+export const DefaultTextStyles = {
   h1: css`
-    font-size: 60px;
+    font-size: 80px;
     font-weight: 600;
     letter-spacing: -1.5;
+
+    ${Style.size.tablet`
+      font-size: 45px;
+    `}
   `,
   h2: css`
     font-size: 45px;
@@ -41,6 +47,7 @@ const StyledText = styled.h1`
   ${props => DefaultTextStyles[props.useTagStyle]};
 
   ${props => props.weight && `font-weight: ${props.weight}`};
+  ${props => props.size && `font-size: ${props.size}`};
 `;
 
 const Text = ({ as = 'h1', type = '', children, ...rest }) => (
@@ -53,6 +60,7 @@ Text.propTypes = {
   as: PropTypes.string.isRequired, // h1 -> h6, span, p
   type: PropTypes.string, // override the tag type
   weight: PropTypes.number,
+  size: PropTypes.number,
 };
 
 export default Text;

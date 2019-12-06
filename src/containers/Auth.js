@@ -1,18 +1,33 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import styled from 'styled-components';
+
+import Container from '../components/container';
+import Text from '../components/Text';
 
 import config from '../config';
 
-const Auth = () => {
-  const { status } = useParams();
+const Content = styled.div`
+  height: 100%;
+  width: 100%;
 
-  console.log(status);
+  > div {
+    height: 100%;
+    width: 100%;
+  }
+`;
+
+const Auth = () => {
+  React.useEffect(() => {
+    window.location.href = `${config.API_URL}/login`;
+  }, []);
+
   return (
-    <div>
-      <h1>You are not authenticated</h1>
-      <a href={`${config.API_URL}/login`}>Authenticate here</a>
-    </div>
-  )
+    <Content>
+      <Container>
+        <Text as="p">If you were not re-directed, click here.</Text>
+      </Container>
+    </Content>
+  );
 };
 
 export default Auth;
