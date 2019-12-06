@@ -7,7 +7,7 @@ import Text from '../Text';
 import config from '../../config';
 
 // The height is 70px, plus account for the margin on bottom
-const HEADER_HEIGHT = 80;
+const HEADER_HEIGHT = 70;
 
 const Root = styled.header`
   position: sticky;
@@ -16,7 +16,6 @@ const Root = styled.header`
   height: 70px;
   background-color: ${config.colors.background};
   color: white;
-  margin-bottom: 10px;
 
   > div {
     height: 100%;

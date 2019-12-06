@@ -8,7 +8,7 @@ import Text, { DefaultTextStyles } from '../components/Text';
 import config from '../config';
 
 const Content = styled.div`
-  height: calc(100vh - 80px);
+  height: calc(100vh - 70px);
   width: 100%;
 
   > div {

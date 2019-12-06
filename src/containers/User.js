@@ -4,17 +4,24 @@ import styled from 'styled-components';
 import Container from '../components/container';
 import Text from '../components/Text';
 
+import NowPlaying from '../components/NowPlaying';
+
 import { Firebase, Spotify } from '../helpers';
 import config from '../config';
 
 const Content = styled.div`
-  height: 150vh;
+  height: 100%;
   width: 100%;
+
+  > div {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const UserProfileName = styled.div`
   position: sticky;
-  top: 80px;
+  top: 70px;
   left: 0;
   height: 70px;
   border-bottom: 1px solid red;
@@ -33,7 +40,6 @@ const User = ({ match }) => {
 
   const loadUserSpotify = async user => {
     const nowPlaying = await Spotify.getCurrentlyPlaying();
-
     setSpotifyNowPlaying(nowPlaying);
   };
 
@@ -41,9 +47,16 @@ const User = ({ match }) => {
     const user = await Firebase.getUser(username);
 
     if (user) {
+      // Set the user in the state
       setUser(user);
+
+      // Set the spotify auth token
       Spotify.setAuthToken(user.auth.accessToken);
-      loadUserSpotify(user);
+
+      // Load what they're currently playing
+      await loadUserSpotify(user);
+    } else if (!user && !username) {
+      setUserNotFound(true);
     }
   };
 
@@ -58,10 +71,10 @@ const User = ({ match }) => {
   }, [match.params.userId]);
 
   return (
-    <Container>
-      <Content>
-        {!userNotFound && !user && <h1>Loading...</h1>}
-        {userNotFound && <h1>No user</h1>}
+    <Content>
+      <Container>
+        {!userNotFound && !user && <Text as="h1">Loading...</Text>}
+        {userNotFound && !user && <Text as="h1">No user</Text>}
         {user && (
           <>
             <UserProfileName>
@@ -69,13 +82,18 @@ const User = ({ match }) => {
                 {user.username}
               </Text>
             </UserProfileName>
+
             <div>
-              <Text as="p">Howdy</Text>
+              {spotifyNowPlaying ? (
+                <NowPlaying image={{ large: {} }} />
+              ) : (
+                <Text as="p">Nothing playing</Text>
+              )}
             </div>
           </>
         )}
-      </Content>
-    </Container>
+      </Container>
+    </Content>
   );
 };
 
