@@ -40,29 +40,17 @@ const SongInfo = styled.div`
   }
 `;
 
-const NowPlaying = ({ title, artists, album, image }) => {
+const NowPlaying = ({ song }) => {
   return (
     <Content>
-      <AlbumArt src={image.large} alt="album art" />
+      <AlbumArt src={song.album.art} alt="album art" />
       <SongInfo>
-        <Text as="h2">{title}</Text>
-        <Text as="h5">{artists}</Text>
-        <Text as="p" weight={400}>
-          {album}
-        </Text>
+        <Text as="h2">{song.name}</Text>
       </SongInfo>
     </Content>
   );
 };
 
-NowPlaying.propTypes = {
-  title: PropTypes.string.isRequired,
-  artists: PropTypes.arrayOf(PropTypes.string).isRequired,
-  album: PropTypes.string.isRequired,
-  image: PropTypes.objectOf({
-    small: PropTypes.string.isRequired,
-    large: PropTypes.string.isRequired,
-  }).isRequired,
-};
+NowPlaying.propTypes = {};
 
 export default NowPlaying;

@@ -5,6 +5,7 @@ import Container from '../components/container';
 import Text from '../components/Text';
 
 import NowPlaying from '../components/NowPlaying';
+import RecentlyPlayed from '../components/RecentlyPlayed';
 
 import { Firebase, Spotify } from '../helpers';
 import config from '../config';
@@ -24,10 +25,20 @@ const UserProfileName = styled.div`
   top: 70px;
   left: 0;
   height: 70px;
-  border-bottom: 1px solid red;
   width: 100%;
   background-color: ${config.colors.background};
 `;
+
+const HeaderContainer = styled.div`
+  width: 100%;
+  background-color: black;
+`;
+
+const Header = ({ title }) => (
+  <HeaderContainer>
+    <Text as="h2">{title}</Text>
+  </HeaderContainer>
+);
 
 const User = ({ match }) => {
   const [user, setUser] = React.useState(undefined);
@@ -84,16 +95,14 @@ const User = ({ match }) => {
             </UserProfileName>
 
             <div>
+              <Header title="Now Playing" />
               {spotifyNowPlaying ? (
-                <NowPlaying
-                  title={spotifyNowPlaying.title}
-                  artists={spotifyNowPlaying.artist}
-                  album={spotifyNowPlaying.album}
-                  image={{ large: spotifyNowPlaying.imageUrl }}
-                />
+                <NowPlaying song={spotifyNowPlaying} />
               ) : (
                 <Text as="p">Nothing playing</Text>
               )}
+              <Header title="Recently Played" />
+              <RecentlyPlayed />
             </div>
           </>
         )}
