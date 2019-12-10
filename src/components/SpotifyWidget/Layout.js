@@ -6,22 +6,23 @@ import config from '../../config';
 
 const Container = styled.div`
   width: 100%;
-  height: auto;
   background-color: ${config.colors.background};
+  border-bottom: 1px solid green;
 
   > div {
-    height: auto;
     min-height: 200px;
     width: 100%;
     margin: 20px 0;
   }
 `;
 
-const SpotifyWidgetLayout = ({ children, title }) => (
-  <Container>
-    <Text as="h2">{title}</Text>
-    <div>{children}</div>
-  </Container>
-);
+const SpotifyWidgetLayout = ({ children, title }) => {
+  return (
+    <Container>
+      <Text as="h2">{title}</Text>
+      <div>{children}</div>
+    </Container>
+  );
+};
 
 export default SpotifyWidgetLayout;

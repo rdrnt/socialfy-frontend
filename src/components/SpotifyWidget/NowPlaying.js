@@ -5,10 +5,9 @@ import PropTypes from 'prop-types';
 import SpotifyWidgetLayout from './Layout';
 import Text from '../Text';
 import { Spotify } from '../../helpers';
+import ArtistName from '../Artist';
 
 const Content = styled.div`
-  border-bottom: 1px blue solid;
-  height: 400px;
   width: 100%;
 
   display: flex;
@@ -37,26 +36,21 @@ const SongInfo = styled.div`
   }
 `;
 
-const NowPlaying = ({}) => {
-  const [nowPlaying, setNowPlaying] = React.useState(undefined);
-
-  const loadCurrentlyPlaying = async () => {
-    const currentlyPlaying = await Spotify.getCurrentlyPlaying();
-    setNowPlaying(currentlyPlaying);
-  };
-
-  React.useEffect(() => {
-    loadCurrentlyPlaying();
-  }, []);
-
+const NowPlaying = ({ song }) => {
   return (
     <SpotifyWidgetLayout title="Now Playing">
       <Content>
-        {nowPlaying ? (
+        {song ? (
           <>
-            <AlbumArt src={nowPlaying.album.art} alt="album art" />
+            <AlbumArt src={song.album.art} alt="album art" />
             <SongInfo>
-              <Text as="h2">{nowPlaying.name}</Text>
+              <Text as="h2">{song.name}</Text>
+              <Text as="p">
+                {song.artists.map(artist => (
+                  <ArtistName key={artist.name} {...artist} />
+                ))}
+              </Text>
+              <Text as="span">{song.album.name}</Text>
             </SongInfo>
           </>
         ) : (

@@ -2,42 +2,30 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import Text from '../Text';
+import Text, { DefaultTextStyles } from '../Text';
 import SpotifyWidgetLayout from './Layout';
 import { Spotify, Style } from '../../helpers';
+import ArtistName from '../Artist';
 
 const Content = styled.div`
-  border-bottom: 1px blue red;
-  height: 300px;
   width: 100%;
 
   display: flex;
   flex-direction: row;
-  align-items: center;
-  align-content: space-evenly;
-  overflow-y: hidden;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
 
   ${Style.size.mobile`
-    flex: 1 1 auto;
-    width: auto;
-    height: 200px;
+
+    
   `}
-
-  div {
-    &:first-child {
-      margin-right: 5px;
-    }
-
-    &:last-child {
-      margin-left: 5px;
-    }
-  }
 `;
 
 const SongContent = styled.div`
-  height: 200px;
+  height: 250px;
   width: 200px;
+  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -45,33 +33,53 @@ const SongContent = styled.div`
   align-items: flex-start;
 
   > img {
-    height: 150px;
-    width: 150px;
+    height: 200px;
+    width: 200px;
   }
 `;
 
-const RecentlyPlayed = () => {
-  const [recentlyPlayed, setRecentlyPlayed] = React.useState([]);
+const SongNumber = styled.div`
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  background-color: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  const getRecentlyPlayed = async () => {
-    const recent = await Spotify.getRecentlyPlayed();
-    setRecentlyPlayed(recent);
-  };
+  > span {
+    ${DefaultTextStyles['span']};
+    color: white;
+  }
+`;
 
-  React.useEffect(() => {
-    getRecentlyPlayed();
-  }, []);
-
+const RecentlyPlayed = ({ songs }) => {
   return (
     <SpotifyWidgetLayout title="Recently Played">
       <Content>
-        {recentlyPlayed.map(item => (
-          <SongContent key={item.url}>
-            <img src={item.album.art} />
-            <Text as="h6">{item.name}</Text>
-            <Text as="span">{item.album.name}</Text>
-          </SongContent>
-        ))}
+        {songs.length ? (
+          songs.map((item, index) => (
+            <SongContent key={item.url + index}>
+              <SongNumber>
+                <Text as="span" weight={600}>
+                  {index + 1}
+                </Text>
+              </SongNumber>
+              <img src={item.album.art} />
+              <Text as="h6">{item.name}</Text>
+              <Text as="span">
+                {item.artists.map((artist, index) => (
+                  <ArtistName key={artist.name} {...artist} />
+                ))}
+              </Text>
+            </SongContent>
+          ))
+        ) : (
+          <Text as="p">Nothing listened too</Text>
+        )}
       </Content>
     </SpotifyWidgetLayout>
   );

@@ -28,17 +28,34 @@ const UserProfileName = styled.div`
   background-color: ${config.colors.background};
 `;
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'NOW_PLAYING':
+      return { ...state, nowPlaying: action.payload };
+    case 'RECENTLY_PLAYED':
+      return { ...state, recentlyPlayed: action.payload };
+    default:
+      return { ...state };
+  }
+};
+
 const User = ({ match }) => {
   const [user, setUser] = React.useState(undefined);
   const [userNotFound, setUserNotFound] = React.useState(false);
 
-  const [updateTimer, setUpdateTimer] = React.useState(undefined);
+  const [spotify, dispatch] = React.useReducer(reducer, {
+    nowPlaying: undefined,
+    recentlyPlayed: [],
+  });
 
-  const initliazeTimer = () => {
-    const timerFunction = setTimeout(() => {
-      console.log('Timer executing');
-    }, 1000 * 20);
-    setUpdateTimer(timerFunction);
+  const [sectionName, setSectionName] = React.useState('');
+
+  const getSpotify = async () => {
+    const nowPlaying = await Spotify.getCurrentlyPlaying();
+    dispatch({ type: 'NOW_PLAYING', payload: nowPlaying });
+
+    const recentlyPlayed = await Spotify.getRecentlyPlayed();
+    dispatch({ type: 'RECENTLY_PLAYED', payload: recentlyPlayed });
   };
 
   const fetchUser = async username => {
@@ -51,7 +68,7 @@ const User = ({ match }) => {
       // Set the spotify auth token
       Spotify.setAuthToken(user.auth.accessToken);
 
-      initliazeTimer();
+      getSpotify();
     } else if (!user && !username) {
       setUserNotFound(true);
     }
@@ -73,17 +90,12 @@ const User = ({ match }) => {
 
   React.useEffect(() => {
     if (user) {
-      /*
-      const timer = setInterval(() => {
-
-      }, 100 * 2000);
-      */
-
-      console.log('yeet');
+      const timer = setInterval(async () => {
+        await getSpotify();
+      }, 50 * 1000);
 
       return () => {
-        console.log('eehhh');
-        // clearInterval(timer);
+        clearInterval(timer);
       };
     }
   }, [user]);
@@ -97,13 +109,13 @@ const User = ({ match }) => {
           <>
             <UserProfileName>
               <Text type="h1" as="h3">
-                {user.username}
+                {sectionName || user.username}
               </Text>
             </UserProfileName>
 
-            <div>
-              <NowPlaying />
-              <RecentlyPlayed />
+            <div id="spotifyContent">
+              <NowPlaying song={spotify.nowPlaying} />
+              <RecentlyPlayed songs={spotify.recentlyPlayed} />
             </div>
           </>
         )}

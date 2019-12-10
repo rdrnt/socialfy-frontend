@@ -34,11 +34,11 @@ const createSong = ({ href, name, artists = [], album }) => {
     name,
     artists: artists.map(artist => ({
       name: artist.name,
-      url: artist.href,
+      url: artist.external_urls.spotify,
     })),
     album: {
       name: album.name,
-      url: album.href,
+      url: album.spotify,
       art: album.images[0].url,
     },
   };
@@ -74,6 +74,8 @@ const Spotify = {
       if (request.status === 200) {
         const { item } = await request.json();
 
+        console.log(item);
+
         return createSong(item);
       }
 
@@ -90,13 +92,13 @@ const Spotify = {
       if (request.status === 200) {
         const { items } = await request.json();
 
-        console.log(items);
-
         let recentSongs = items.map(({ track }) => createSong(track));
 
         recentSongs = removeDuplicatesFromObjArray(recentSongs, 'url');
 
-        return recentSongs.slice(0, 5);
+        recentSongs = removeDuplicatesFromObjArray(recentSongs, 'name');
+
+        return recentSongs.slice(0, 8);
       }
 
       return [];
