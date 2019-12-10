@@ -3,33 +3,46 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../Text';
+import SpotifyWidgetLayout from './Layout';
 import { Spotify, Style } from '../../helpers';
 
 const Content = styled.div`
-  border-bottom: 1px blue solid;
-  height: 400px;
+  border-bottom: 1px blue red;
+  height: 300px;
   width: 100%;
 
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  flex-direction: row;
   align-items: center;
-  align-content: space-between;
+  align-content: space-evenly;
+  overflow-y: hidden;
+  overflow-x: auto;
 
   ${Style.size.mobile`
     flex: 1 1 auto;
-    overflow-y: auto;
     width: auto;
     height: 200px;
   `}
+
+  div {
+    &:first-child {
+      margin-right: 5px;
+    }
+
+    &:last-child {
+      margin-left: 5px;
+    }
+  }
 `;
 
 const SongContent = styled.div`
   height: 200px;
   width: 200px;
-  background-color: green;
-  margin: 2px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 
   > img {
     height: 150px;
@@ -50,13 +63,17 @@ const RecentlyPlayed = () => {
   }, []);
 
   return (
-    <Content>
-      {recentlyPlayed.map(item => (
-        <SongContent key={item.url}>
-          <img src={item.album.art} />
-        </SongContent>
-      ))}
-    </Content>
+    <SpotifyWidgetLayout title="Recently Played">
+      <Content>
+        {recentlyPlayed.map(item => (
+          <SongContent key={item.url}>
+            <img src={item.album.art} />
+            <Text as="h6">{item.name}</Text>
+            <Text as="span">{item.album.name}</Text>
+          </SongContent>
+        ))}
+      </Content>
+    </SpotifyWidgetLayout>
   );
 };
 

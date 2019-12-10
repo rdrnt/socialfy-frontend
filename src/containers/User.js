@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import Container from '../components/container';
 import Text from '../components/Text';
 
-import NowPlaying from '../components/NowPlaying';
-import RecentlyPlayed from '../components/RecentlyPlayed';
+import { RecentlyPlayed, NowPlaying } from '../components/SpotifyWidget';
 
 import { Firebase, Spotify } from '../helpers';
 import config from '../config';
@@ -29,29 +28,17 @@ const UserProfileName = styled.div`
   background-color: ${config.colors.background};
 `;
 
-const HeaderContainer = styled.div`
-  width: 100%;
-  background-color: black;
-`;
-
-const Header = ({ title }) => (
-  <HeaderContainer>
-    <Text as="h2">{title}</Text>
-  </HeaderContainer>
-);
-
 const User = ({ match }) => {
   const [user, setUser] = React.useState(undefined);
   const [userNotFound, setUserNotFound] = React.useState(false);
 
-  const [spotifyNowPlaying, setSpotifyNowPlaying] = React.useState(undefined);
-  const [spotifyRecentlyPlayed, setSpotifyRecentlyPlayed] = React.useState(
-    undefined
-  );
+  const [updateTimer, setUpdateTimer] = React.useState(undefined);
 
-  const loadUserSpotify = async user => {
-    const nowPlaying = await Spotify.getCurrentlyPlaying();
-    setSpotifyNowPlaying(nowPlaying);
+  const initliazeTimer = () => {
+    const timerFunction = setTimeout(() => {
+      console.log('Timer executing');
+    }, 1000 * 20);
+    setUpdateTimer(timerFunction);
   };
 
   const fetchUser = async username => {
@@ -64,8 +51,7 @@ const User = ({ match }) => {
       // Set the spotify auth token
       Spotify.setAuthToken(user.auth.accessToken);
 
-      // Load what they're currently playing
-      await loadUserSpotify(user);
+      initliazeTimer();
     } else if (!user && !username) {
       setUserNotFound(true);
     }
@@ -81,6 +67,27 @@ const User = ({ match }) => {
     }
   }, [match.params.userId]);
 
+  React.useEffect(() => {
+    console.log('Spotify auth token', Spotify.authToken);
+  }, [Spotify.authToken]);
+
+  React.useEffect(() => {
+    if (user) {
+      /*
+      const timer = setInterval(() => {
+
+      }, 100 * 2000);
+      */
+
+      console.log('yeet');
+
+      return () => {
+        console.log('eehhh');
+        // clearInterval(timer);
+      };
+    }
+  }, [user]);
+
   return (
     <Content>
       <Container>
@@ -95,13 +102,7 @@ const User = ({ match }) => {
             </UserProfileName>
 
             <div>
-              <Header title="Now Playing" />
-              {spotifyNowPlaying ? (
-                <NowPlaying song={spotifyNowPlaying} />
-              ) : (
-                <Text as="p">Nothing playing</Text>
-              )}
-              <Header title="Recently Played" />
+              <NowPlaying />
               <RecentlyPlayed />
             </div>
           </>
