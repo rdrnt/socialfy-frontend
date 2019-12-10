@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Container from '../container';
-import Text from '../Text';
+import Text, { DefaultTextStyles } from '../Text';
 
 import config from '../../config';
 
@@ -25,13 +26,17 @@ const Root = styled.header`
   }
 `;
 
+const Title = styled(Link)`
+  ${DefaultTextStyles['h2']};
+  text-decoration: none;
+  color: white;
+`;
+
 const Header = () => {
   return (
     <Root>
       <Container>
-        <Text type="h1" as="h2">
-          Sharify
-        </Text>
+        <Title to={config.routes.HOME}>Sharify</Title>
       </Container>
     </Root>
   );
