@@ -17,6 +17,7 @@ const Content = styled.div`
 
   ${Style.size.mobile`
     flex-direction: column;
+    align-items: flex-start;
   `}
 `;
 
@@ -38,10 +39,6 @@ const SongInfo = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-
-  ${Style.size.mobile`
-    align-items: center;
-  `}
 
   > p {
     margin-top: 10px;

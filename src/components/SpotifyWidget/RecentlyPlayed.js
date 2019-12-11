@@ -15,11 +15,6 @@ const Content = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
-
-  ${Style.size.mobile`
-
-    
-  `}
 `;
 
 const SongContent = styled.div`
@@ -32,9 +27,19 @@ const SongContent = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 
+  ${Style.size.mobile`
+    height: 200px;
+    width: 150px;
+  `}
+
   > img {
     height: 200px;
     width: 200px;
+
+    ${Style.size.mobile`
+      height: 150px;
+      width: 150px;
+    `}
   }
 `;
 
