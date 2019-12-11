@@ -74,8 +74,6 @@ const Spotify = {
       if (request.status === 200) {
         const { item } = await request.json();
 
-        console.log(item);
-
         return createSong(item);
       }
 
