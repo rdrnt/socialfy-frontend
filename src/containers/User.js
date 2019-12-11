@@ -39,6 +39,12 @@ const reducer = (state, action) => {
   }
 };
 
+function useEffectAsync(effect, inputs) {
+  React.useEffect(() => {
+    effect();
+  }, inputs);
+}
+
 const User = ({ match }) => {
   const [user, setUser] = React.useState(undefined);
   const [userNotFound, setUserNotFound] = React.useState(false);
@@ -48,8 +54,6 @@ const User = ({ match }) => {
     recentlyPlayed: [],
   });
 
-  const [sectionName, setSectionName] = React.useState('');
-
   const getSpotify = async () => {
     const nowPlaying = await Spotify.getCurrentlyPlaying();
     dispatch({ type: 'NOW_PLAYING', payload: nowPlaying });
@@ -58,45 +62,43 @@ const User = ({ match }) => {
     dispatch({ type: 'RECENTLY_PLAYED', payload: recentlyPlayed });
   };
 
-  const fetchUser = async username => {
-    const user = await Firebase.getUser(username);
+  useEffectAsync(async () => {
+    // Get the username to search for
+    const usernameToSearch = match.params.userId;
+    const user = await Firebase.getUser(usernameToSearch);
 
+    // If we have a user, initialize the update timer & user listener
     if (user) {
-      // Set the user in the state
-      setUser(user);
+      // Initialize the listener
+      const listener = Firebase.onUserChanged({
+        id: user.id,
+        onChange: changedUser => {
+          setUser(changedUser);
+        },
+      });
 
-      // Set the spotify auth token
-      Spotify.setAuthToken(user.auth.accessToken);
+      // Create the timer to fetch spotify data every 20 minutes
+      const updateSpotifyTimer = setInterval(async () => {
+        console.log('Refreshing spotify....');
+        await getSpotify();
+      }, 50 * 1000);
 
-      getSpotify();
-    } else if (!user && !username) {
-      setUserNotFound(true);
-    }
-  };
-
-  React.useEffect(() => {
-    const username = match.params.userId;
-
-    if (username) {
-      fetchUser(username);
-    } else if (!username) {
+      return () => {
+        if (listener) {
+          console.log('Removing listener');
+          listener();
+        }
+        clearInterval(updateSpotifyTimer);
+      };
+    } else {
       setUserNotFound(true);
     }
   }, [match.params.userId]);
 
   React.useEffect(() => {
-    console.log('Spotify auth token', Spotify.authToken);
-  }, [Spotify.authToken]);
-
-  React.useEffect(() => {
     if (user) {
-      const timer = setInterval(async () => {
-        await getSpotify();
-      }, 50 * 1000);
-
-      return () => {
-        clearInterval(timer);
-      };
+      Spotify.setAuthToken(user.auth.accessToken);
+      getSpotify();
     }
   }, [user]);
 
@@ -109,7 +111,7 @@ const User = ({ match }) => {
           <>
             <UserProfileName>
               <Text type="h1" as="h3">
-                {sectionName || user.username}
+                {user.username}
               </Text>
             </UserProfileName>
 

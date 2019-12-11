@@ -26,6 +26,15 @@ const Firebase = {
       return undefined;
     }
   },
+  onUserChanged: ({ id, onChange }) =>
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(id)
+      .onSnapshot(userSnapshot => {
+        const userData = userSnapshot.data();
+        onChange(userData);
+      }),
 };
 
 export default Firebase;
