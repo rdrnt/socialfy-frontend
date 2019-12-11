@@ -63,7 +63,7 @@ const SongNumber = styled.div`
 
 const RecentlyPlayed = ({ songs }) => {
   return (
-    <SpotifyWidgetLayout title="Recently Played">
+    <SpotifyWidgetLayout title="Recently Played" error={Boolean(songs.length)}>
       <Content>
         {songs.length ? (
           songs.map((item, index) => (

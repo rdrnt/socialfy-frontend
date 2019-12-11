@@ -50,7 +50,7 @@ const SongInfo = styled.div`
 
 const NowPlaying = ({ song }) => {
   return (
-    <SpotifyWidgetLayout title="Now Playing">
+    <SpotifyWidgetLayout title="Now Playing" error={Boolean(song)}>
       <Content>
         {song ? (
           <>
