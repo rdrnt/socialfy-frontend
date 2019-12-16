@@ -4,15 +4,18 @@ import PropTypes from 'prop-types';
 
 import SpotifyWidgetLayout from './Layout';
 import Text from '../Text';
-import ArtistName from '../Artist';
+import ArtistName, { createArtistNames } from '../Artist';
 import { Style } from '../../helpers';
+import config from '../../config';
+
+import NoSpotifyImage from '../../assets/nospot.png';
 
 const Content = styled.div`
   width: 100%;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 
   ${Style.size.mobile`
@@ -24,7 +27,7 @@ const Content = styled.div`
 const AlbumArt = styled.img`
   height: 300px;
   width: 300px;
-  background-color: red;
+  background-color: ${config.colors.primary};
 
   margin: 0 20px 0 0;
 
@@ -48,18 +51,27 @@ const SongInfo = styled.div`
   }
 `;
 
-const NowPlaying = ({ song }) => {
+const NowPlaying = ({ song, ...rest }) => {
+  if (song) {
+    const { artists } = song;
+    createArtistNames(artists);
+  }
   return (
-    <SpotifyWidgetLayout title="Now Playing" error={Boolean(song)}>
+    <SpotifyWidgetLayout
+      title="Now Playing"
+      error={Boolean(song)}
+      small={true}
+      {...rest}
+    >
       <Content>
         {song ? (
           <>
             <AlbumArt src={song.album.art} alt="album art" />
             <SongInfo>
-              <Text as="h3">{song.name}</Text>
+              <Text as="h2">{song.name}</Text>
               <Text as="p">
                 {song.artists.map(artist => (
-                  <ArtistName key={artist.name} {...artist} />
+                  <ArtistName tagStyle="h5" key={artist.name} {...artist} />
                 ))}
               </Text>
               <Text as="span">{song.album.name}</Text>
@@ -67,9 +79,11 @@ const NowPlaying = ({ song }) => {
           </>
         ) : (
           <>
-            <AlbumArt src="" alt="album art" />
+            <AlbumArt src={NoSpotifyImage} alt="album art" />
             <SongInfo>
-              <Text as="h2">Unavailable</Text>
+              <Text as="h2">No song playing</Text>
+              <Text as="h5">Unavailable</Text>
+              <Text as="span">Unavailable</Text>
             </SongInfo>
           </>
         )}

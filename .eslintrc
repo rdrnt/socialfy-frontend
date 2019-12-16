@@ -3,11 +3,12 @@
     "browser": true,
     "es6": true
   },
-  "extends": ["airbnb","plugin:prettier/recommended"],
+  "extends": ["airbnb", "prettier"],
   "plugins": [
       "react",
       "jsx-a11y",
-      "import"
+      "import",
+      "prettier"
   ],
   "rules": {
     "new-cap": [

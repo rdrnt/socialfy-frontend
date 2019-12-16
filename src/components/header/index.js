@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import Container from '../container';
@@ -14,15 +14,25 @@ const Root = styled.header`
   position: sticky;
   top: 0;
   left: 0;
-  height: 70px;
+  min-height: 70px;
   background-color: ${config.colors.background};
   color: white;
+  border-bottom: 1px solid ${config.colors.primary};
 
+  /* The container */
   > div {
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+  }
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  > p {
+    margin-bottom: 10px;
   }
 `;
 
@@ -32,11 +42,35 @@ const Title = styled(Link)`
   color: white;
 `;
 
+export const HeaderContext = React.createContext({
+  sublabel: '',
+  setSublabel: () => {},
+});
+
+export const HeaderContextProvider = props => {
+  const [sublabel, setSublabel] = React.useState('');
+
+  return (
+    <HeaderContext.Provider value={{ sublabel, setSublabel }}>
+      {props.children}
+    </HeaderContext.Provider>
+  );
+};
+
 const Header = () => {
+  const state = React.useContext(HeaderContext);
+
   return (
     <Root>
       <Container>
-        <Title to={config.routes.HOME}>Sharify</Title>
+        <Content>
+          <Title to={config.routes.HOME}>Sharify</Title>
+          {state.sublabel && (
+            <Text type="p" as="h5">
+              {state.sublabel}
+            </Text>
+          )}
+        </Content>
       </Container>
     </Root>
   );

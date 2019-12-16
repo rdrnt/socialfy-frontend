@@ -1,5 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import { useDebouncedCallback } from 'use-debounce';
 
 import Container from '../components/container';
 import Text from '../components/Text';
@@ -8,6 +10,7 @@ import { RecentlyPlayed, NowPlaying } from '../components/SpotifyWidget';
 
 import { Firebase, Spotify } from '../helpers';
 import config from '../config';
+import { HeaderContext } from '../components/header';
 
 const Content = styled.div`
   height: 100%;
@@ -16,19 +19,14 @@ const Content = styled.div`
   > div {
     height: 100%;
     width: 100%;
+
+    #spotifyContent {
+      overflow-y: auto;
+    }
   }
 `;
 
-const UserProfileName = styled.div`
-  position: sticky;
-  top: 70px;
-  left: 0;
-  height: 70px;
-  width: 100%;
-  background-color: ${config.colors.background};
-`;
-
-const reducer = (state, action) => {
+const spotifyReducer = (state, action) => {
   switch (action.type) {
     case 'NOW_PLAYING':
       return { ...state, nowPlaying: action.payload };
@@ -49,7 +47,9 @@ const User = ({ match }) => {
   const [user, setUser] = React.useState(undefined);
   const [userNotFound, setUserNotFound] = React.useState(false);
 
-  const [spotify, dispatch] = React.useReducer(reducer, {
+  const headerContext = React.useContext(HeaderContext);
+
+  const [spotify, dispatch] = React.useReducer(spotifyReducer, {
     nowPlaying: undefined,
     recentlyPlayed: [],
   });
@@ -97,8 +97,13 @@ const User = ({ match }) => {
 
   React.useEffect(() => {
     if (user) {
+      headerContext.setSublabel(`${user.username}'s profile`);
       Spotify.setAuthToken(user.auth.accessToken);
       getSpotify();
+
+      return () => {
+        headerContext.setSublabel('');
+      };
     }
   }, [user]);
 
@@ -108,18 +113,10 @@ const User = ({ match }) => {
         {!userNotFound && !user && <Text as="h1">Loading...</Text>}
         {userNotFound && !user && <Text as="h1">No user</Text>}
         {user && (
-          <>
-            <UserProfileName>
-              <Text type="h1" as="h3">
-                {user.username}
-              </Text>
-            </UserProfileName>
-
-            <div id="spotifyContent">
-              <NowPlaying song={spotify.nowPlaying} />
-              <RecentlyPlayed songs={spotify.recentlyPlayed} />
-            </div>
-          </>
+          <div id="spotifyContent">
+            <NowPlaying song={spotify.nowPlaying} autoSize={true} />
+            <RecentlyPlayed songs={spotify.recentlyPlayed} />
+          </div>
         )}
       </Container>
     </Content>

@@ -16,7 +16,7 @@ export const DefaultTextStyles = {
   `,
   h2: css`
     font-size: 45px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: -1;
   `,
   h3: css`
@@ -29,6 +29,7 @@ export const DefaultTextStyles = {
   `,
   h5: css`
     font-size: 23px;
+    font-weight: 500;
   `,
   h6: css`
     font-size: 19px;

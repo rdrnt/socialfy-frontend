@@ -61,9 +61,13 @@ const SongNumber = styled.div`
   }
 `;
 
-const RecentlyPlayed = ({ songs }) => {
+const RecentlyPlayed = ({ songs, ...rest }) => {
   return (
-    <SpotifyWidgetLayout title="Recently Played" error={Boolean(songs.length)}>
+    <SpotifyWidgetLayout
+      title="Recently Played"
+      error={Boolean(songs.length)}
+      {...rest}
+    >
       <Content>
         {songs.length ? (
           songs.map((item, index) => (
@@ -74,7 +78,7 @@ const RecentlyPlayed = ({ songs }) => {
                 </Text>
               </SongNumber>
               <img src={item.album.art} />
-              <Text as="h6">{item.name}</Text>
+              <Text as="p">{item.name}</Text>
               <Text as="span">
                 {item.artists.map((artist, index) => (
                   <ArtistName key={artist.name} {...artist} />
