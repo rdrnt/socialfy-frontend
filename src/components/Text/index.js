@@ -32,6 +32,7 @@ export const DefaultTextStyles = {
     font-weight: 500;
   `,
   h6: css`
+    font-weight: 500;
     font-size: 19px;
   `,
   p: css`

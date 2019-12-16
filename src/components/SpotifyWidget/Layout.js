@@ -20,7 +20,7 @@ const Container = styled.div`
   width: 100%;
   background-color: ${config.colors.background};
   border-bottom: 1px solid green;
-  padding: 10px 0;
+  padding: 20px 0;
 
   > div {
     min-height: ${getHeight};

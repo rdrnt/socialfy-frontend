@@ -78,7 +78,9 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
                 </Text>
               </SongNumber>
               <img src={item.album.art} />
-              <Text as="p">{item.name}</Text>
+              <Text type="p" as="h6">
+                {item.name}
+              </Text>
               <Text as="span">
                 {item.artists.map((artist, index) => (
                   <ArtistName key={artist.name} {...artist} />

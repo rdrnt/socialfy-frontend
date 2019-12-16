@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useDebouncedCallback } from 'use-debounce';
 
 import Container from '../container';
 import Text, { DefaultTextStyles } from '../Text';
@@ -17,7 +18,8 @@ const Root = styled.header`
   min-height: 70px;
   background-color: ${config.colors.background};
   color: white;
-  border-bottom: 1px solid ${config.colors.primary};
+  border-bottom: ${props =>
+    `1px solid rgba(255, 255, 255, ${props.borderOpacity})`};
 
   /* The container */
   > div {
@@ -45,13 +47,18 @@ const Title = styled(Link)`
 export const HeaderContext = React.createContext({
   sublabel: '',
   setSublabel: () => {},
+  borderOpacity: 0,
+  setBorderOpacity: () => {},
 });
 
 export const HeaderContextProvider = props => {
   const [sublabel, setSublabel] = React.useState('');
+  const [borderOpacity, setBorderOpacity] = React.useState(0);
 
   return (
-    <HeaderContext.Provider value={{ sublabel, setSublabel }}>
+    <HeaderContext.Provider
+      value={{ sublabel, setSublabel, borderOpacity, setBorderOpacity }}
+    >
       {props.children}
     </HeaderContext.Provider>
   );
@@ -60,8 +67,29 @@ export const HeaderContextProvider = props => {
 const Header = () => {
   const state = React.useContext(HeaderContext);
 
+  const onScroll = () => {
+    const value = window.scrollY;
+    if (value >= 0 && value <= 201) {
+      // Get the scroll value from 0.0-0.99
+      const fixedValue = value / 2 / 100;
+      state.setBorderOpacity(fixedValue);
+    } else if (value > 100 && state.borderOpacity !== 1) {
+      state.setBorderOpacity(1);
+    }
+  };
+
+  React.useEffect(() => {
+    if (window) {
+      window.addEventListener('scroll', onScroll);
+
+      return () => {
+        window.removeEventListener('scroll', onScroll);
+      };
+    }
+  }, []);
+
   return (
-    <Root>
+    <Root borderOpacity={state.borderOpacity}>
       <Container>
         <Content>
           <Title to={config.routes.HOME}>Sharify</Title>
