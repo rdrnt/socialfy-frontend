@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import SpotifyWidgetLayout from './Layout';
 import Text from '../Text';
-import ArtistName, { createArtistNames } from '../Artist';
+import ArtistNames from '../Artist';
 import { Style } from '../../helpers';
 import config from '../../config';
 
@@ -52,10 +52,6 @@ const SongInfo = styled.div`
 `;
 
 const NowPlaying = ({ song, ...rest }) => {
-  if (song) {
-    const { artists } = song;
-    createArtistNames(artists);
-  }
   return (
     <SpotifyWidgetLayout
       title="Now Playing"
@@ -70,9 +66,7 @@ const NowPlaying = ({ song, ...rest }) => {
             <SongInfo>
               <Text as="h2">{song.name}</Text>
               <Text as="p">
-                {song.artists.map(artist => (
-                  <ArtistName tagStyle="h5" key={artist.name} {...artist} />
-                ))}
+                <ArtistNames artists={song.artists} tagStyle="h5" />
               </Text>
               <Text as="span">{song.album.name}</Text>
             </SongInfo>

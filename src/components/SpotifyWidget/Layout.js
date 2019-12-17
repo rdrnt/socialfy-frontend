@@ -21,11 +21,11 @@ const Container = styled.div`
   background-color: ${config.colors.background};
   border-bottom: 1px solid green;
   padding: 20px 0;
+  height: auto;
 
   > div {
     min-height: ${getHeight};
     width: 100%;
-    margin: 20px 0;
   }
 `;
 

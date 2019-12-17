@@ -12,26 +12,16 @@ const Name = styled.a`
   }
 `;
 
-const ArtistName = ({ url, name, tagStyle = 'p' }) => (
-  <Name href={url} tagStyle={tagStyle}>
-    {name}
-  </Name>
-);
-
-export const createArtistNames = (artists = []) => {
-  const artistNames = artists.map((artist, index) => {
-    const isLastItem = index + 1 === artist.length;
+const ArtistNames = ({ artists = [], tagStyle = 'p' }) =>
+  artists.map((artist, index) => {
+    const isNotLastItem = Boolean(artists.length - 1 === index);
 
     return (
-      <ArtistName
-        key={artist.url}
-        url={artist.url}
-        name={`${artist.name}${isLastItem ? '' : ', '}`}
-      />
+      <Name key={artist.url} href={artist.url} tagStyle={tagStyle}>
+        {artist.name}
+        {!isNotLastItem && `, `}
+      </Name>
     );
   });
 
-  console.log('idk', artistNames);
-};
-
-export default ArtistName;
+export default ArtistNames;

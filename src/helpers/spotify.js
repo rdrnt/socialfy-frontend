@@ -96,6 +96,16 @@ const Spotify = {
 
         recentSongs = removeDuplicatesFromObjArray(recentSongs, 'name');
 
+        // Remove blank artists
+        recentSongs = recentSongs.map(recentSong => ({
+          ...recentSong,
+          artists: recentSong.artists.filter(
+            recentSongArtist => recentSongArtist !== ''
+          ),
+        }));
+
+        console.log(recentSongs.slice(0, 8));
+
         return recentSongs.slice(0, 8);
       }
 

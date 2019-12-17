@@ -39,10 +39,9 @@ export const DefaultTextStyles = {
     font-size: 16px;
   `,
   span: css`
-    font-size: 13px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    line-height: 1px;
   `,
 };
 

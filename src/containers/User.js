@@ -17,12 +17,8 @@ const Content = styled.div`
   width: 100%;
 
   > div {
-    height: 100%;
+    height: auto;
     width: 100%;
-
-    #spotifyContent {
-      overflow-y: auto;
-    }
   }
 `;
 

@@ -33,7 +33,7 @@ const Content = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
 
-  > p {
+  > span {
     margin-bottom: 10px;
   }
 `;
@@ -93,11 +93,7 @@ const Header = () => {
       <Container>
         <Content>
           <Title to={config.routes.HOME}>Sharify</Title>
-          {state.sublabel && (
-            <Text type="p" as="h5">
-              {state.sublabel}
-            </Text>
-          )}
+          {state.sublabel && <Text as="span">{state.sublabel}</Text>}
         </Content>
       </Container>
     </Root>

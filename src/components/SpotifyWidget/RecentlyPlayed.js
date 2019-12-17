@@ -5,41 +5,36 @@ import PropTypes from 'prop-types';
 import Text, { DefaultTextStyles } from '../Text';
 import SpotifyWidgetLayout from './Layout';
 import { Spotify, Style } from '../../helpers';
-import ArtistName from '../Artist';
+import ArtistNames from '../Artist';
 
 const Content = styled.div`
   width: 100%;
+  height: auto;
 
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: space-around;
 `;
 
 const SongContent = styled.div`
-  height: 250px;
+  min-height: 250px;
+  height: auto;
   width: 200px;
+
   position: relative;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
 
-  ${Style.size.mobile`
-    height: 200px;
-    width: 150px;
-  `}
-
   > img {
-    height: 200px;
+    height: 180px;
     width: 200px;
-
-    ${Style.size.mobile`
-      height: 150px;
-      width: 150px;
-    `}
   }
 `;
 
@@ -82,9 +77,7 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
                 {item.name}
               </Text>
               <Text as="span">
-                {item.artists.map((artist, index) => (
-                  <ArtistName key={artist.name} {...artist} />
-                ))}
+                <ArtistNames artists={item.artists} tagStyle="span" />
               </Text>
             </SongContent>
           ))
