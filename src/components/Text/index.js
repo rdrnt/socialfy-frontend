@@ -38,7 +38,12 @@ export const DefaultTextStyles = {
   p: css`
     font-size: 16px;
   `,
-  span: css``,
+  span: css`
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1px;
+  `,
 };
 
 const StyledText = styled.h1`
@@ -47,7 +52,6 @@ const StyledText = styled.h1`
   margin: 0;
   padding: 0;
   color: white;
-  line-height: 1;
   font-weight: normal;
 
   ${props => DefaultTextStyles[props.useTagStyle]};

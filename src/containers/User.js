@@ -73,6 +73,7 @@ const User = ({ match }) => {
       const listener = Firebase.onUserChanged({
         id: user.id,
         onChange: changedUser => {
+          console.log('User changed', changedUser);
           setUser(changedUser);
         },
       });
@@ -81,7 +82,7 @@ const User = ({ match }) => {
       const updateSpotifyTimer = setInterval(async () => {
         console.log('Refreshing spotify....');
         await getSpotify();
-      }, 50 * 1000);
+      }, 120 * 1000);
 
       return () => {
         if (listener) {

@@ -89,7 +89,7 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
             </SongContent>
           ))
         ) : (
-          <Text as="p">Nothing listened too</Text>
+          <Text as="span">Nothing listened too</Text>
         )}
       </Content>
     </SpotifyWidgetLayout>
