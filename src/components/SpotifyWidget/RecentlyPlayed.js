@@ -14,14 +14,13 @@ const Content = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: space-around;
+  justify-content: space-between;
+  align-items: flex-start;
 `;
+// was working on making the items even on mobile and desktop
 
 const SongContent = styled.div`
-  min-height: 250px;
-  height: auto;
+  max-height: 325px;
   width: 200px;
 
   position: relative;
@@ -29,11 +28,11 @@ const SongContent = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
 
   > img {
-    height: 180px;
+    height: 200px;
     width: 200px;
   }
 `;
