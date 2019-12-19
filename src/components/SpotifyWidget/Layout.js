@@ -21,11 +21,15 @@ const Container = styled.div`
   background-color: ${config.colors.background};
   border-bottom: 1px solid green;
   height: auto;
+  padding: 20px 0;
+
+  > h2 {
+    margin-bottom: 10px;
+  }
 
   > div {
     min-height: ${getHeight};
     width: 100%;
-    margin: 20px 0;
   }
 `;
 
