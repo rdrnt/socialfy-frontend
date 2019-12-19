@@ -1,15 +1,11 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useDebouncedCallback } from 'use-debounce';
 
 import Container from '../container';
 import Text, { DefaultTextStyles } from '../Text';
 
 import config from '../../config';
-
-// The height is 70px, plus account for the margin on bottom
-const HEADER_HEIGHT = 70;
 
 const Root = styled.header`
   position: sticky;

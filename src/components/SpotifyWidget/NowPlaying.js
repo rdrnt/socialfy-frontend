@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 import SpotifyWidgetLayout from './Layout';
 import Text from '../Text';
@@ -9,6 +8,7 @@ import { Style } from '../../helpers';
 import config from '../../config';
 
 import NoSpotifyImage from '../../assets/nospot.png';
+import { SpotifySongProp } from '../../helpers/spotify';
 
 const Content = styled.div`
   width: 100%;
@@ -86,6 +86,8 @@ const NowPlaying = ({ song, ...rest }) => {
   );
 };
 
-NowPlaying.propTypes = {};
+NowPlaying.propTypes = {
+  song: SpotifySongProp,
+};
 
 export default NowPlaying;

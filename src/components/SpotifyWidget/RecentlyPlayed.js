@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 import Text, { DefaultTextStyles } from '../Text';
 import SpotifyWidgetLayout from './Layout';
-import { Spotify, Style } from '../../helpers';
+
 import ArtistNames from '../Artist';
 
 const Content = styled.div`
@@ -71,7 +70,7 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
                   {index + 1}
                 </Text>
               </SongNumber>
-              <img src={item.album.art} />
+              <img src={item.album.art} alt="" />
               <Text type="p" as="h6">
                 {item.name}
               </Text>

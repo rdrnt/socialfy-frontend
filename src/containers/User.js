@@ -1,16 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { useDebouncedCallback } from 'use-debounce';
 
 import Container from '../components/container';
 import Text from '../components/Text';
-
 import { RecentlyPlayed, NowPlaying } from '../components/SpotifyWidget';
+import { HeaderContext } from '../components/header';
 
 import { Firebase, Spotify } from '../helpers';
-import config from '../config';
-import { HeaderContext } from '../components/header';
 
 const Content = styled.div`
   height: 100%;
@@ -33,7 +29,7 @@ const spotifyReducer = (state, action) => {
   }
 };
 
-function useEffectAsync(effect, inputs) {
+function useEffectAsync(effect, inputs = []) {
   React.useEffect(() => {
     effect();
   }, inputs);

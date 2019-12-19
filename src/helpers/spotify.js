@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const API_URL = 'https://api.spotify.com/v1/me';
 
 // https://stackoverflow.com/questions/19501441/remove-duplicate-objects-from-an-array-using-javascript
@@ -24,7 +26,6 @@ const createSong = ({ href, name, artists = [], album }) => {
     album: {
       name: string;
       url: string;
-
     }
   }
   */
@@ -115,5 +116,21 @@ const Spotify = {
     }
   },
 };
+
+export const SpotifySongProp = PropTypes.shape({
+  url: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  artists: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    })
+  ),
+  album: {
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    art: PropTypes.string.isRequired,
+  },
+});
 
 export default Spotify;

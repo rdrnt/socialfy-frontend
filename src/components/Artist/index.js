@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Text, { DefaultTextStyles } from '../Text';
+import { DefaultTextStyles } from '../Text';
 
 const Name = styled.a`
   text-decoration: none;
