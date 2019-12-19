@@ -4,7 +4,7 @@ const config = {
     primary: '#03ba4e',
     secondary: '#4b98f8',
     background: '#000',
-    backgroundSecondary: '#eeefee',
+    backgroundSecondary: '#272727',
     text: '',
   },
   routes: {

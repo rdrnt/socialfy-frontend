@@ -36,10 +36,10 @@ export const DefaultTextStyles = {
     font-weight: 500;
   `,
   h6: css`
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 1.6;
-    letter-spacing: -0.5px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.24px;
   `,
   p: css`
     font-size: 16px;
