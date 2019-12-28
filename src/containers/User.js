@@ -3,7 +3,11 @@ import styled from 'styled-components';
 
 import Container from '../components/container';
 import Text from '../components/Text';
-import { RecentlyPlayed, NowPlaying } from '../components/SpotifyWidget';
+import {
+  RecentlyPlayed,
+  NowPlaying,
+  InfoBar,
+} from '../components/SpotifyWidget';
 import { HeaderContext } from '../components/header';
 
 import { Firebase, Spotify } from '../helpers';
@@ -109,6 +113,7 @@ const User = ({ match }) => {
           <div id="spotifyContent">
             <NowPlaying song={spotify.nowPlaying} autoSize={true} />
             <RecentlyPlayed songs={spotify.recentlyPlayed} />
+            <InfoBar />
           </div>
         )}
       </Container>
