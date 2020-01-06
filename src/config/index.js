@@ -10,12 +10,14 @@ const config = {
   routes: {
     HOME: '/',
     AUTH: '/auth',
+    SEARCH: '/search',
   },
   breakpoints: {
     desktop: 1024,
     tablet: 768,
     mobile: 376,
   },
+  spacing: 12,
 };
 
 export default config;

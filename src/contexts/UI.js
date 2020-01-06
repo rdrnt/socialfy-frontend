@@ -7,17 +7,11 @@ export const UIContext = React.createContext({
     setSublabel: () => {},
     setBorderOpacity: () => {},
   },
-  search: {
-    show: false,
-    set: () => {},
-  },
 });
 
 export const UIContextProvider = props => {
   const [headerSublabel, setHeaderSublabel] = React.useState('');
   const [headerBorderOpacity, setHeaderBorderOpacity] = React.useState(0);
-
-  const [showSearch, setSearchShowing] = React.useState(false);
 
   return (
     <UIContext.Provider
@@ -27,10 +21,6 @@ export const UIContextProvider = props => {
           borderOpacity: headerBorderOpacity,
           setSublabel: setHeaderSublabel,
           setBorderOpacity: setHeaderBorderOpacity,
-        },
-        search: {
-          show: showSearch,
-          set: setSearchShowing,
         },
       }}
     >

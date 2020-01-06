@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Container from '../container';
 import Text, { DefaultTextStyles } from '../Text';
@@ -57,6 +58,7 @@ const Title = styled(Link)`
 
 const Header = () => {
   const { header } = React.useContext(UIContext);
+  const history = useHistory();
 
   const onScroll = () => {
     const value = window.scrollY;
@@ -88,7 +90,10 @@ const Header = () => {
             {header.sublabel && <Text as="span">{header.sublabel}</Text>}
           </Content>
           <SearchIcon>
-            <Icon name="search" onClick={() => console.log('Onclick')} />
+            <Icon
+              name="search"
+              onClick={() => history.push(config.routes.SEARCH)}
+            />
           </SearchIcon>
         </Layout>
       </Container>
