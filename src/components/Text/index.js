@@ -8,7 +8,7 @@ export const DefaultTextStyles = {
   h1: css`
     font-size: 80px;
     font-weight: 600;
-    letter-spacing: -1.5;
+    letter-spacing: -0.04em;
 
     ${Style.size.tablet`
       font-size: 45px;
@@ -47,7 +47,7 @@ export const DefaultTextStyles = {
   span: css`
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
   `,
 };
 

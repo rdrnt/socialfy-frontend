@@ -6,6 +6,7 @@ import Container from '../container';
 import Text, { DefaultTextStyles } from '../Text';
 
 import config from '../../config';
+import Icon from '../Icon';
 
 const Root = styled.header`
   position: sticky;
@@ -23,15 +24,28 @@ const Root = styled.header`
   }
 `;
 
+const Layout = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  flex-grow: 1;
 
   > span {
     margin-bottom: 10px;
   }
+`;
+
+const SearchIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled(Link)`
@@ -87,10 +101,15 @@ const Header = () => {
   return (
     <Root borderOpacity={state.borderOpacity}>
       <Container>
-        <Content>
-          <Title to={config.routes.HOME}>Sharify</Title>
-          {state.sublabel && <Text as="span">{state.sublabel}</Text>}
-        </Content>
+        <Layout>
+          <Content>
+            <Title to={config.routes.HOME}>Sharify</Title>
+            {state.sublabel && <Text as="span">{state.sublabel}</Text>}
+          </Content>
+          <SearchIcon>
+            <Icon name="search" onClick={() => console.log('Onclick')} />
+          </SearchIcon>
+        </Layout>
       </Container>
     </Root>
   );

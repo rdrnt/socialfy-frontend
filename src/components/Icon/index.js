@@ -1,25 +1,40 @@
 import React from 'react';
 import { AiOutlineQrcode } from 'react-icons/ai';
+import { MdSearch } from 'react-icons/md';
+
 import config from '../../config';
 
 const IconTable = {
   qrcode: <AiOutlineQrcode />,
+  search: <MdSearch />,
 };
 
-const Icon = ({
-  name = '',
-  size = 25,
-  color = config.colors.primary,
-  children,
-}) => {
+const useHover = () => {
+  const [hovering, setHovering] = React.useState(false);
+
+  const returnValues = {
+    onMouseOver: () => setHovering(true),
+    onMouseOut: () => setHovering(false),
+    onTouchEnd: () => setHovering(false),
+    onTouchStart: () => setHovering(true),
+  };
+
+  return [hovering, returnValues];
+};
+
+const Icon = ({ name = '', size = 25, color = 'white', onClick, children }) => {
   const IconForName = IconTable[name];
+
+  const [hovering, hoverProps] = useHover();
 
   return IconForName
     ? React.cloneElement(
         IconForName,
         {
-          color,
+          color: hovering ? config.colors.primary : color,
           size,
+          onClick,
+          ...hoverProps,
         },
         children
       )
