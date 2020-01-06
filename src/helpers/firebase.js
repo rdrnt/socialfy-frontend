@@ -35,6 +35,23 @@ const Firebase = {
         const userData = userSnapshot.data();
         onChange(userData);
       }),
+  getUsersFromResult: async (searchValue = '') => {
+    // https://stackoverflow.com/a/56815787/5314646
+    const matchingUserDocs = await firebase
+      .firestore()
+      .collection('users')
+      .where('username', '>=', searchValue)
+      .where('username', '<=', searchValue + '\uf8ff')
+      .get();
+
+    const matchingUsers = matchingUserDocs.docs.map(userDoc => {
+      const userData = userDoc.data();
+
+      return userData.username;
+    });
+
+    return matchingUsers;
+  },
 };
 
 export default Firebase;
