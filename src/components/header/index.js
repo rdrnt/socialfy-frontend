@@ -7,6 +7,7 @@ import Text, { DefaultTextStyles } from '../Text';
 
 import config from '../../config';
 import Icon from '../Icon';
+import { UIContext } from '../../contexts';
 
 const Root = styled.header`
   position: sticky;
@@ -54,37 +55,17 @@ const Title = styled(Link)`
   color: white;
 `;
 
-export const HeaderContext = React.createContext({
-  sublabel: '',
-  setSublabel: () => {},
-  borderOpacity: 0,
-  setBorderOpacity: () => {},
-});
-
-export const HeaderContextProvider = props => {
-  const [sublabel, setSublabel] = React.useState('');
-  const [borderOpacity, setBorderOpacity] = React.useState(0);
-
-  return (
-    <HeaderContext.Provider
-      value={{ sublabel, setSublabel, borderOpacity, setBorderOpacity }}
-    >
-      {props.children}
-    </HeaderContext.Provider>
-  );
-};
-
 const Header = () => {
-  const state = React.useContext(HeaderContext);
+  const { header } = React.useContext(UIContext);
 
   const onScroll = () => {
     const value = window.scrollY;
     if (value >= 0 && value <= 201) {
       // Get the scroll value from 0.0-0.99
       const fixedValue = value / 2 / 100;
-      state.setBorderOpacity(fixedValue);
-    } else if (value > 100 && state.borderOpacity !== 1) {
-      state.setBorderOpacity(1);
+      header.setBorderOpacity(fixedValue);
+    } else if (value > 100 && header.borderOpacity !== 1) {
+      header.setBorderOpacity(1);
     }
   };
 
@@ -99,12 +80,12 @@ const Header = () => {
   }, []);
 
   return (
-    <Root borderOpacity={state.borderOpacity}>
+    <Root borderOpacity={header.borderOpacity}>
       <Container>
         <Layout>
           <Content>
             <Title to={config.routes.HOME}>Sharify</Title>
-            {state.sublabel && <Text as="span">{state.sublabel}</Text>}
+            {header.sublabel && <Text as="span">{header.sublabel}</Text>}
           </Content>
           <SearchIcon>
             <Icon name="search" onClick={() => console.log('Onclick')} />

@@ -5,7 +5,9 @@ import Home from './containers/Home';
 import Auth from './containers/Auth';
 import User from './containers/User';
 
-import Header, { HeaderContextProvider } from './components/header';
+import Header from './components/header';
+
+import { UIContextProvider } from './contexts';
 
 import { Firebase } from './helpers';
 import config from './config';
@@ -14,7 +16,7 @@ Firebase.initialize();
 
 const App = () => (
   <Router>
-    <HeaderContextProvider>
+    <UIContextProvider>
       <Header />
       <Switch>
         <Route exact path={config.routes.HOME} component={Home} />
@@ -22,7 +24,7 @@ const App = () => (
         <Route path="/:userId" component={User} />
         <Route path="*" component={() => <p>no match</p>} />
       </Switch>
-    </HeaderContextProvider>
+    </UIContextProvider>
   </Router>
 );
 

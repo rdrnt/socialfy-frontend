@@ -8,7 +8,7 @@ import {
   NowPlaying,
   InfoBar,
 } from '../components/SpotifyWidget';
-import { HeaderContext } from '../components/header';
+import { UIContext } from '../contexts';
 
 import { Firebase, Spotify } from '../helpers';
 
@@ -43,7 +43,7 @@ const User = ({ match }) => {
   const [user, setUser] = React.useState(undefined);
   const [userNotFound, setUserNotFound] = React.useState(false);
 
-  const headerContext = React.useContext(HeaderContext);
+  const uiContext = React.useContext(UIContext);
 
   const [spotify, dispatch] = React.useReducer(spotifyReducer, {
     nowPlaying: undefined,
@@ -94,12 +94,12 @@ const User = ({ match }) => {
 
   React.useEffect(() => {
     if (user) {
-      headerContext.setSublabel(`${user.username}'s profile`);
+      uiContext.header.setSublabel(`${user.username}'s profile`);
       Spotify.setAuthToken(user.auth.accessToken);
       getSpotify();
 
       return () => {
-        headerContext.setSublabel('');
+        uiContext.header.setSublabel('');
       };
     }
   }, [user]);
