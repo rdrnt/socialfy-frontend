@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import Text, { DefaultTextStyles } from '../Text';
 import SpotifyWidgetLayout from './Layout';
@@ -56,7 +57,7 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
         {songs.length ? (
           songs.map((item, index) => (
             <SongContent key={item.url + index}>
-              <img src={item.album.art} alt="" />
+              <img src={item.album.albumArt} alt="" />
               <Text type="p" as="h6">
                 {item.name}
               </Text>
@@ -73,6 +74,8 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
   );
 };
 
-RecentlyPlayed.propTypes = {};
+RecentlyPlayed.propTypes = {
+  songs: PropTypes.array.isRequired,
+};
 
 export default RecentlyPlayed;

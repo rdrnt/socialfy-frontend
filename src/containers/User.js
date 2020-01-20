@@ -10,7 +10,7 @@ import {
 } from '../components/SpotifyWidget';
 import { UIContext } from '../contexts';
 
-import { Firebase, Spotify } from '../helpers';
+import { Firebase, API } from '../helpers';
 
 const Content = styled.div`
   height: 100%;
@@ -51,55 +51,63 @@ const User = ({ match }) => {
   });
 
   const getSpotify = async () => {
-    const nowPlaying = await Spotify.getCurrentlyPlaying();
-    dispatch({ type: 'NOW_PLAYING', payload: nowPlaying });
+    const { nowPlaying, recentlyPlayed } = await API.getUserSpotify(
+      user.username
+    );
 
-    const recentlyPlayed = await Spotify.getRecentlyPlayed();
-    dispatch({ type: 'RECENTLY_PLAYED', payload: recentlyPlayed });
+    if (nowPlaying) dispatch({ type: 'NOW_PLAYING', payload: nowPlaying });
+
+    if (recentlyPlayed)
+      dispatch({ type: 'RECENTLY_PLAYED', payload: recentlyPlayed });
   };
 
+  // Runs when we get a new username in the url
   useEffectAsync(async () => {
     // Get the username to search for
     const usernameToSearch = match.params.userId;
-    const user = await Firebase.getUser(usernameToSearch);
+    // Get the users firebase profile
+    const firebaseUser = await Firebase.getUser(usernameToSearch);
 
-    // If we have a user, initialize the update timer & user listener
-    if (user) {
+    // If we have a user, initialize the user listener & set initial data
+    if (firebaseUser) {
+      // Set the header username
+      uiContext.header.setSublabel(`${firebaseUser.username}'s profile`);
       // Initialize the listener
       const listener = Firebase.onUserChanged({
-        id: user.id,
+        id: firebaseUser.id,
         onChange: changedUser => {
           console.log('User changed', changedUser);
           setUser(changedUser);
         },
       });
 
-      // Create the timer to fetch spotify data every 20 minutes
-      const updateSpotifyTimer = setInterval(async () => {
-        console.log('Refreshing spotify....');
-        await getSpotify();
-      }, 120 * 1000);
-
       return () => {
         if (listener) {
           console.log('Removing listener');
           listener();
         }
-        clearInterval(updateSpotifyTimer);
+        uiContext.header.setSublabel('');
       };
     } else {
       setUserNotFound(true);
     }
   }, [match.params.userId]);
 
+  // When the user changes (i.e auth info, username, etc);
   React.useEffect(() => {
     if (user) {
-      uiContext.header.setSublabel(`${user.username}'s profile`);
-      Spotify.setAuthToken(user.auth.accessToken);
+      console.log('User changed useEffect');
       getSpotify();
 
+      // Create the timer to fetch spotify data every 20 minutes
+      const updateSpotifyTimer = setInterval(async () => {
+        console.log('Refreshing spotify....', user);
+        await getSpotify();
+      }, 120 * 1000);
+
       return () => {
-        uiContext.header.setSublabel('');
+        console.log('User changed effect goodbye');
+        clearInterval(updateSpotifyTimer);
       };
     }
   }, [user]);
