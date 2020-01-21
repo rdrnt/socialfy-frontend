@@ -44,7 +44,6 @@ const SongInfo = styled.div`
   justify-content: center;
 
   > p {
-    margin-top: 10px;
     ${Style.size.mobile`
       margin-top: 5px;
     `}
@@ -62,7 +61,7 @@ const NowPlaying = ({ song, ...rest }) => {
       <Content>
         {song ? (
           <>
-            <AlbumArt src={song.album.art} alt="album art" />
+            <AlbumArt src={song.album.albumArt} alt="album art" />
             <SongInfo>
               <Text as="h2">{song.name}</Text>
               <Text as="p">

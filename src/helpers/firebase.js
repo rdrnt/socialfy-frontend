@@ -2,11 +2,17 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import firebaseConfig from '../config/firebase.json';
+import firebaseProdConfig from '../config/firebaseProd.json';
+import firebaseDevConfig from '../config/firebaseDev.json';
+
+import Environment from './env';
 
 const Firebase = {
   initialize: () => {
-    firebase.initializeApp(firebaseConfig);
+    const configToUse = Environment.isDevelopment
+      ? firebaseDevConfig
+      : firebaseProdConfig;
+    firebase.initializeApp(configToUse);
   },
   getUser: async username => {
     try {
