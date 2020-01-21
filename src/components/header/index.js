@@ -86,7 +86,7 @@ const Header = () => {
       <Container>
         <Layout>
           <Content>
-            <Title to={config.routes.HOME}>Sharify</Title>
+            <Title to={config.routes.HOME}>Socialfy</Title>
             {header.sublabel && <Text as="span">{header.sublabel}</Text>}
           </Content>
           <SearchIcon>
