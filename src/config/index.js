@@ -1,5 +1,4 @@
 const config = {
-  API_URL: 'https://us-central1-sharify-5fb5c.cloudfunctions.net/api',
   colors: {
     primary: '#03ba4e',
     secondary: '#4b98f8',

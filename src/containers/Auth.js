@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Container from '../components/container';
 import Text from '../components/Text';
 
-import config from '../config';
+import { Environment } from '../helpers';
 
 const Content = styled.div`
   height: 100%;
@@ -18,7 +18,7 @@ const Content = styled.div`
 
 const Auth = () => {
   React.useEffect(() => {
-    window.location.href = `${config.API_URL}/login`;
+    window.location.href = `${Environment.config.API_URL}/login`;
   }, []);
 
   return (

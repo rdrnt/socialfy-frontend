@@ -24,27 +24,24 @@ const Content = styled.div`
   }
 `;
 
-const AuthButton = styled.button`
-  height: 50px;
+const AuthButton = styled(Link)`
+  display: inline-block;
   width: 160px;
-  border-radius: 25px;
+  border-radius: 50px;
   background-color: white;
-  padding: 5px;
+  padding: ${config.spacing * 2}px;
+  text-align: center;
 
-  > a {
-    color: ${config.colors.background};
-    text-transform: uppercase;
-    ${DefaultTextStyles['span']};
-    font-weight: bold;
-    text-decoration: none;
-  }
+  color: ${config.colors.background};
+  text-transform: uppercase;
+  ${DefaultTextStyles['span']};
+  font-weight: bold;
+  text-decoration: none;
 
   :hover {
     border: 3px solid white;
     background-color: ${config.colors.background};
-    > a {
-      color: white;
-    }
+    color: white;
   }
 `;
 
@@ -71,9 +68,7 @@ const Home = () => {
       <Container>
         <Text as="h1">Share what you're currently jamming too.</Text>
         <TimedReveal pose={revealContent ? 'show' : 'hide'}>
-          <AuthButton type="button">
-            <Link to={config.routes.AUTH}>Get started</Link>
-          </AuthButton>
+          <AuthButton to={config.routes.AUTH}>Get started</AuthButton>
         </TimedReveal>
       </Container>
     </Content>

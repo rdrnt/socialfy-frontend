@@ -13,7 +13,7 @@ const checkIfDevelopment = () => {
 const Environment = {
   isDevelopment: checkIfDevelopment(),
   config: {
-    API_URL: checkIfDevelopment
+    API_URL: checkIfDevelopment()
       ? 'https://us-central1-sharify-dev.cloudfunctions.net/api'
       : 'https://us-central1-sharify-5fb5c.cloudfunctions.net/api',
   },

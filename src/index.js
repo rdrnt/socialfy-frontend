@@ -5,6 +5,12 @@ import 'typeface-poppins';
 
 import App from './App';
 
+import { Environment } from './helpers';
+
+if (Environment.isDevelopment) {
+  console.warn('SOCIALFY - RUNNING IN DEVELOPMENT MODE');
+}
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
