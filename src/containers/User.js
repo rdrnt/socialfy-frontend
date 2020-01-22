@@ -7,6 +7,7 @@ import {
   RecentlyPlayed,
   NowPlaying,
   InfoBar,
+  TopPlayed,
 } from '../components/SpotifyWidget';
 import { UIContext } from '../contexts';
 
@@ -28,6 +29,8 @@ const spotifyReducer = (state, action) => {
       return { ...state, nowPlaying: action.payload };
     case 'RECENTLY_PLAYED':
       return { ...state, recentlyPlayed: action.payload };
+    case 'TOP_PLAYED':
+      return { ...state, topPlayed: action.payload };
     default:
       return { ...state };
   }
@@ -48,10 +51,11 @@ const User = ({ match }) => {
   const [spotify, dispatch] = React.useReducer(spotifyReducer, {
     nowPlaying: undefined,
     recentlyPlayed: [],
+    topPlayed: [],
   });
 
   const getSpotify = async () => {
-    const { nowPlaying, recentlyPlayed } = await API.getUserSpotify(
+    const { nowPlaying, recentlyPlayed, topPlayed } = await API.getUserSpotify(
       user.username
     );
 
@@ -59,6 +63,8 @@ const User = ({ match }) => {
 
     if (recentlyPlayed)
       dispatch({ type: 'RECENTLY_PLAYED', payload: recentlyPlayed });
+
+    if (topPlayed) dispatch({ type: 'TOP_PLAYED', payload: topPlayed });
   };
 
   // Runs when we get a new username in the url
@@ -103,7 +109,7 @@ const User = ({ match }) => {
       const updateSpotifyTimer = setInterval(async () => {
         console.log('Refreshing spotify....', user);
         await getSpotify();
-      }, 120 * 1000);
+      }, 45 * 1000);
 
       return () => {
         console.log('User changed effect goodbye');
@@ -121,6 +127,7 @@ const User = ({ match }) => {
           <div id="spotifyContent">
             <NowPlaying song={spotify.nowPlaying} autoSize={true} />
             <RecentlyPlayed songs={spotify.recentlyPlayed} />
+            <TopPlayed songs={spotify.topPlayed} />
             <InfoBar />
           </div>
         )}
