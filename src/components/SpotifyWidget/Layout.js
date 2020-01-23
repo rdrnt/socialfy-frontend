@@ -21,10 +21,10 @@ const Container = styled.div`
   background-color: ${config.colors.background};
   /* border-bottom: 1px solid green; */
   height: auto;
-  padding: 20px 0;
+  padding: ${config.spacing * 2}px 0;
 
   > h2 {
-    margin-bottom: 10px;
+    margin-bottom: ${config.spacing}px;
   }
 
   > div {
