@@ -1,13 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { PoseGroup } from 'react-pose';
 
-import Text, { DefaultTextStyles } from '../Text';
 import SpotifyWidgetLayout from './Layout';
 import SpotifyCard from '../SpotifyCard';
-
-import ArtistNames from '../Artist';
-import config from '../../config';
 
 const Content = styled.div`
   height: auto;
@@ -30,16 +27,17 @@ const TopPlayed = ({ songs, ...rest }) => {
       {...rest}
     >
       <Content>
-        {songs.length ? (
-          songs.map((item, index) => (
-            <SpotifyCard
-              albumArt={item.album.albumArt}
-              name={item.name}
-              artists={item.artists}
-            />
-          ))
-        ) : (
-          <Text as="span">Nothing listened too</Text>
+        {songs.length && (
+          <PoseGroup animateOnMount={true}>
+            {songs.map(item => (
+              <SpotifyCard
+                key={item.url}
+                albumArt={item.album.albumArt}
+                name={item.name}
+                artists={item.artists}
+              />
+            ))}
+          </PoseGroup>
         )}
       </Content>
     </SpotifyWidgetLayout>

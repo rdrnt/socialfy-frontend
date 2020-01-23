@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import posed from 'react-pose';
 
 import Text from '../Text';
 
@@ -31,9 +32,18 @@ const Content = styled.div`
   }
 `;
 
+const AnimatedContent = posed(Content)({
+  enter: {
+    opacity: 1,
+  },
+  exit: {
+    opacity: 0,
+  },
+});
+
 const SpotifyCard = ({ albumArt, name, artists, ...rest }) => {
   return (
-    <Content key={name} {...rest}>
+    <AnimatedContent key={name} {...rest}>
       <img src={albumArt} alt="" />
       <Text type="p" as="h6">
         {name}
@@ -41,7 +51,7 @@ const SpotifyCard = ({ albumArt, name, artists, ...rest }) => {
       <Text as="span">
         <ArtistNames artists={artists} tagStyle="span" />
       </Text>
-    </Content>
+    </AnimatedContent>
   );
 };
 
