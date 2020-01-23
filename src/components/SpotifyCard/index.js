@@ -31,9 +31,9 @@ const Content = styled.div`
   }
 `;
 
-const SpotifyCard = ({ albumArt, name, artists }) => {
+const SpotifyCard = ({ albumArt, name, artists, ...rest }) => {
   return (
-    <Content key={name}>
+    <Content key={name} {...rest}>
       <img src={albumArt} alt="" />
       <Text type="p" as="h6">
         {name}

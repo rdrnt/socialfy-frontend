@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BarLoader } from 'react-spinners';
+import { BeatLoader } from 'react-spinners';
 import posed, { PoseGroup } from 'react-pose';
 
 import Container from '../components/container';
@@ -149,7 +149,7 @@ const User = ({ match }) => {
           {!userNotFound && !user && (
             <AnimatedTempScreen key="loading">
               <Text as="h1">Loading...</Text>
-              <BarLoader color={config.colors.primary} />
+              <BeatLoader color={config.colors.primary} />
             </AnimatedTempScreen>
           )}
           {userNotFound && !user && (

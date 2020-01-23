@@ -19,7 +19,7 @@ const getHeight = props => {
 const Container = styled.div`
   width: 100%;
   background-color: ${config.colors.background};
-  border-bottom: 1px solid green;
+  /* border-bottom: 1px solid green; */
   height: auto;
   padding: 20px 0;
 

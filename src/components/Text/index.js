@@ -17,7 +17,7 @@ export const DefaultTextStyles = {
   h2: css`
     font-size: 45px;
     font-weight: 600;
-    letter-spacing: -1;
+    letter-spacing: -0.03em;
   `,
   h3: css`
     font-size: 36px;
