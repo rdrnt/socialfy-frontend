@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BarLoader } from 'react-spinners';
+import posed, { PoseGroup } from 'react-pose';
 
 import Container from '../components/container';
 import Text from '../components/Text';
@@ -12,6 +14,7 @@ import {
 import { UIContext } from '../contexts';
 
 import { Firebase, API } from '../helpers';
+import config from '../config';
 
 const Content = styled.div`
   height: 100%;
@@ -22,6 +25,28 @@ const Content = styled.div`
     width: 100%;
   }
 `;
+
+const TempScreen = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: ${config.colors.background};
+`;
+
+const AnimatedTempScreen = posed(TempScreen)({
+  enter: {
+    opacity: 1,
+  },
+  exit: {
+    opacity: 0,
+  },
+});
 
 const spotifyReducer = (state, action) => {
   switch (action.type) {
@@ -59,12 +84,11 @@ const User = ({ match }) => {
       user.username
     );
 
-    if (nowPlaying) dispatch({ type: 'NOW_PLAYING', payload: nowPlaying });
+    dispatch({ type: 'NOW_PLAYING', payload: nowPlaying });
 
-    if (recentlyPlayed)
-      dispatch({ type: 'RECENTLY_PLAYED', payload: recentlyPlayed });
+    dispatch({ type: 'RECENTLY_PLAYED', payload: recentlyPlayed });
 
-    if (topPlayed) dispatch({ type: 'TOP_PLAYED', payload: topPlayed });
+    dispatch({ type: 'TOP_PLAYED', payload: topPlayed });
   };
 
   // Runs when we get a new username in the url
@@ -121,8 +145,19 @@ const User = ({ match }) => {
   return (
     <Content>
       <Container>
-        {!userNotFound && !user && <Text as="h1">Loading...</Text>}
-        {userNotFound && !user && <Text as="h1">No user</Text>}
+        <PoseGroup>
+          {!userNotFound && !user && (
+            <AnimatedTempScreen key="loading">
+              <Text as="h1">Loading...</Text>
+              <BarLoader color={config.colors.primary} />
+            </AnimatedTempScreen>
+          )}
+          {userNotFound && !user && (
+            <AnimatedTempScreen key="not found">
+              <Text as="h1">No user</Text>
+            </AnimatedTempScreen>
+          )}
+        </PoseGroup>
         {user && (
           <div id="spotifyContent">
             <NowPlaying song={spotify.nowPlaying} autoSize={true} />
