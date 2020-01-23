@@ -10,6 +10,7 @@ import {
   NowPlaying,
   InfoBar,
   TopPlayed,
+  TopArtists,
 } from '../components/SpotifyWidget';
 import { UIContext } from '../contexts';
 
@@ -56,6 +57,8 @@ const spotifyReducer = (state, action) => {
       return { ...state, recentlyPlayed: action.payload };
     case 'TOP_PLAYED':
       return { ...state, topPlayed: action.payload };
+    case 'TOP_ARTISTS':
+      return { ...state, topArtists: action.payload };
     default:
       return { ...state };
   }
@@ -77,18 +80,21 @@ const User = ({ match }) => {
     nowPlaying: undefined,
     recentlyPlayed: [],
     topPlayed: [],
+    topArtists: [],
   });
 
   const getSpotify = async () => {
-    const { nowPlaying, recentlyPlayed, topPlayed } = await API.getUserSpotify(
-      user.username
-    );
+    const {
+      nowPlaying = undefined,
+      recentlyPlayed = [],
+      topPlayed = [],
+      topArtists = [],
+    } = await API.getUserSpotify(user.username);
 
     dispatch({ type: 'NOW_PLAYING', payload: nowPlaying });
-
     dispatch({ type: 'RECENTLY_PLAYED', payload: recentlyPlayed });
-
     dispatch({ type: 'TOP_PLAYED', payload: topPlayed });
+    dispatch({ type: 'TOP_ARTISTS', payload: topArtists });
   };
 
   // Runs when we get a new username in the url
@@ -163,6 +169,7 @@ const User = ({ match }) => {
             <NowPlaying song={spotify.nowPlaying} autoSize={true} />
             <RecentlyPlayed songs={spotify.recentlyPlayed} />
             <TopPlayed songs={spotify.topPlayed} />
+            <TopArtists artists={spotify.topArtists} />
             <InfoBar />
           </div>
         )}

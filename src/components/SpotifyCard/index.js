@@ -41,16 +41,18 @@ const AnimatedContent = posed(Content)({
   },
 });
 
-const SpotifyCard = ({ albumArt, name, artists, ...rest }) => {
+const SpotifyCard = ({ albumArt, name, artists = [], ...rest }) => {
   return (
     <AnimatedContent key={name} {...rest}>
       <img src={albumArt} alt="" />
       <Text type="p" as="h6">
         {name}
       </Text>
-      <Text as="span">
-        <ArtistNames artists={artists} tagStyle="span" />
-      </Text>
+      {Boolean(artists.length) && (
+        <Text as="span">
+          <ArtistNames artists={artists} tagStyle="span" />
+        </Text>
+      )}
     </AnimatedContent>
   );
 };
@@ -58,7 +60,7 @@ const SpotifyCard = ({ albumArt, name, artists, ...rest }) => {
 SpotifyCard.propTypes = {
   albumArt: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  artists: PropTypes.array.isRequired,
+  artists: PropTypes.array,
 };
 
 export default SpotifyCard;
