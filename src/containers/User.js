@@ -76,25 +76,8 @@ const User = ({ match }) => {
 
   const uiContext = React.useContext(UIContext);
 
-  const [spotify, dispatch] = React.useReducer(spotifyReducer, {
-    nowPlaying: undefined,
-    recentlyPlayed: [],
-    topPlayed: [],
-    topArtists: [],
-  });
-
-  const getSpotify = async () => {
-    const {
-      nowPlaying = undefined,
-      recentlyPlayed = [],
-      topPlayed = [],
-      topArtists = [],
-    } = await API.getUserSpotify(user.username);
-
-    dispatch({ type: 'NOW_PLAYING', payload: nowPlaying });
-    dispatch({ type: 'RECENTLY_PLAYED', payload: recentlyPlayed });
-    dispatch({ type: 'TOP_PLAYED', payload: topPlayed });
-    dispatch({ type: 'TOP_ARTISTS', payload: topArtists });
+  const refreshUserSpotify = async () => {
+    await API.refreshUserSpotifyInfo(user.username);
   };
 
   // Runs when we get a new username in the url
@@ -133,12 +116,12 @@ const User = ({ match }) => {
   React.useEffect(() => {
     if (user) {
       console.log('User changed useEffect');
-      getSpotify();
+      refreshUserSpotify();
 
       // Create the timer to fetch spotify data every 20 minutes
       const updateSpotifyTimer = setInterval(async () => {
         console.log('Refreshing spotify....', user);
-        await getSpotify();
+        await refreshUserSpotify();
       }, 90 * 1000);
 
       return () => {
@@ -166,10 +149,10 @@ const User = ({ match }) => {
         </PoseGroup>
         {user && (
           <div id="spotifyContent">
-            <NowPlaying song={spotify.nowPlaying} autoSize={true} />
-            <RecentlyPlayed songs={spotify.recentlyPlayed} />
-            <TopPlayed songs={spotify.topPlayed} />
-            <TopArtists artists={spotify.topArtists} />
+            <NowPlaying song={user.spotify.nowPlaying} autoSize={true} />
+            <RecentlyPlayed songs={user.spotify.recentlyPlayed} />
+            <TopPlayed songs={user.spotify.topPlayed} />
+            <TopArtists artists={user.spotify.topArtists} />
             <InfoBar />
           </div>
         )}
