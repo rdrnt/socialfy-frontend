@@ -33,6 +33,7 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
             {songs.map(item => (
               <SpotifyCard
                 key={item.url}
+                url={item.url}
                 albumArt={item.album.albumArt}
                 name={item.name}
                 artists={item.artists}

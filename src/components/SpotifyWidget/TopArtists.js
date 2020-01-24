@@ -32,6 +32,7 @@ const TopArtists = ({ artists, ...rest }) => {
             {artists.map(artist => (
               <SpotifyCard
                 key={artist.url}
+                url={artist.url}
                 albumArt={artist.image}
                 name={artist.name}
               />

@@ -139,7 +139,7 @@ const User = ({ match }) => {
       const updateSpotifyTimer = setInterval(async () => {
         console.log('Refreshing spotify....', user);
         await getSpotify();
-      }, 45 * 1000);
+      }, 90 * 1000);
 
       return () => {
         console.log('User changed effect goodbye');
