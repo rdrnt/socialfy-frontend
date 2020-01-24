@@ -8,7 +8,7 @@ import Text from '../Text';
 import ArtistNames from '../Artist';
 import config from '../../config';
 
-const Content = styled.a`
+const Content = styled.div`
   min-height: 250px;
   width: 200px;
   padding: ${config.spacing * 2}px;
@@ -48,13 +48,7 @@ const AnimatedContent = posed(Content)({
 
 const SpotifyCard = ({ albumArt, name, artists = [], url, ...rest }) => {
   return (
-    <AnimatedContent
-      key={name}
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      {...rest}
-    >
+    <AnimatedContent key={name} {...rest}>
       <img src={albumArt} alt="" />
       <Text type="p" as="h6">
         {name}
