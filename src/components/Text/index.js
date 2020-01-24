@@ -18,12 +18,19 @@ export const DefaultTextStyles = {
     font-size: 45px;
     font-weight: 600;
     letter-spacing: -0.03em;
+
+    ${Style.size.mobile`
+      font-size: 35px;
+    `};
   `,
   h3: css`
     font-size: 36px;
     font-weight: 700;
-    letter-spacing: -1;
-    line-height: 1.2em;
+    letter-spacing: -0.02em;
+
+    ${Style.size.mobile`
+      font-size: 30px;
+    `};
   `,
   h4: css`
     font-size: 28px;
@@ -58,6 +65,7 @@ const StyledText = styled.h1`
   padding: 0;
   color: white;
   font-weight: normal;
+  line-height: 1;
 
   ${props => DefaultTextStyles[props.useTagStyle]};
 

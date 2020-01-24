@@ -11,7 +11,7 @@ import config from '../../config';
 const Content = styled.div`
   min-height: 250px;
   width: 200px;
-  padding: ${config.spacing * 2}px;
+  padding: ${config.spacing * 1.5}px;
   border-radius: 8px;
   background-color: ${config.colors.backgroundSecondary};
   text-decoration: none;
@@ -32,8 +32,8 @@ const Content = styled.div`
   > img {
     border-radius: 2px;
     margin-bottom: 5px;
-    height: 150px;
-    width: 150px;
+    height: 160px;
+    width: 160px;
   }
 `;
 

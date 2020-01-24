@@ -63,19 +63,17 @@ const NowPlaying = ({ song, ...rest }) => {
           <>
             <AlbumArt src={song.album.albumArt} alt="album art" />
             <SongInfo>
-              <Text as="h2">{song.name}</Text>
-              <Text as="p">
-                <ArtistNames artists={song.artists} tagStyle="h5" />
+              <Text as="h3">{song.name}</Text>
+              <Text as="span">
+                <ArtistNames artists={song.artists} tagStyle="p" />
               </Text>
-              <Text as="span">{song.album.name}</Text>
             </SongInfo>
           </>
         ) : (
           <>
             <AlbumArt src={NoSpotifyImage} alt="album art" />
             <SongInfo>
-              <Text as="h2">No song playing</Text>
-              <Text as="h5">Unavailable</Text>
+              <Text as="h3">No song playing</Text>
               <Text as="span">Unavailable</Text>
             </SongInfo>
           </>
