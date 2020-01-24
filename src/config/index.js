@@ -17,6 +17,9 @@ const config = {
     mobile: 376,
   },
   spacing: 12,
+  zIndex: {
+    MAX: 999,
+  },
 };
 
 export default config;

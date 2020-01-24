@@ -35,9 +35,10 @@ const TempScreen = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   background-color: ${config.colors.background};
+  z-index: ${config.zIndex.MAX};
 `;
 
 const AnimatedTempScreen = posed(TempScreen)({
@@ -46,6 +47,7 @@ const AnimatedTempScreen = posed(TempScreen)({
   },
   exit: {
     opacity: 0,
+    delay: 500,
   },
 });
 
