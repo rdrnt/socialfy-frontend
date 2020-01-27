@@ -19,7 +19,7 @@ const Firebase = {
       const userDocQuery = await firebase
         .firestore()
         .collection('users')
-        .where('username', '==', username)
+        .where('profile.username', '==', username)
         .get();
 
       if (userDocQuery.docs[0]) {
@@ -46,8 +46,8 @@ const Firebase = {
     const matchingUserDocs = await firebase
       .firestore()
       .collection('users')
-      .where('username', '>=', searchValue)
-      .where('username', '<=', searchValue + '\uf8ff')
+      .where('profile.username', '>=', searchValue)
+      .where('profile.username', '<=', searchValue + '\uf8ff')
       .get();
 
     const matchingUsers = matchingUserDocs.docs.map(userDoc => {

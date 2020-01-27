@@ -4,10 +4,13 @@ import { useDebounce } from 'use-debounce';
 import { Link } from 'react-router-dom';
 
 import Container from '../components/container';
-import Text from '../components/Text';
+import Text, { DefaultTextStyles } from '../components/Text';
+import {
+  ProfileSearchResult,
+  ProfileSearchResults,
+} from '../components/ProfileSearch';
 
 import config from '../config';
-import { DefaultTextStyles } from '../components/Text/index';
 import { Firebase } from '../helpers';
 
 const Content = styled.div`
@@ -19,7 +22,8 @@ const Content = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
 
     > h1 {
       margin-top: 15px;
@@ -29,38 +33,16 @@ const Content = styled.div`
 
 const SearchBox = styled.input`
   width: 100%;
-  max-width: 800px;
-  height: 50px;
-  background-color: white;
+  max-width: 400px;
+  height: 40px;
+  background-color: ${config.colors.backgroundSecondary};
   padding: 0 ${config.spacing}px;
-  border-radius: 8px;
+  margin: ${config.spacing * 2}px 0;
+  border-radius: 6px;
 
+  color: white;
   ${DefaultTextStyles['p']};
   font-weight: 600;
-`;
-
-const SearchResults = styled.div`
-  margin-top: 15px;
-  width: 100%;
-  max-width: 800px;
-  padding: ${config.spacing}px;
-  border-radius: 8px;
-  background-color: ${config.colors.backgroundSecondary};
-
-  > ul {
-    list-style: none;
-  }
-`;
-
-const SearchResultItem = styled.li`
-  width: 100%;
-  height: 30px;
-  padding: 0;
-  margin: 0;
-
-  :hover {
-    background-color: green;
-  }
 `;
 
 const Search = ({}) => {
@@ -87,28 +69,26 @@ const Search = ({}) => {
   return (
     <Content>
       <Container>
-        <Text as="h1">Search for users</Text>
+        <Text as="h1">Search</Text>
         <SearchBox
           type="text"
-          placeholder="Search..."
+          placeholder="Type your search..."
           value={searchValue}
           onChange={event => setSearchValue(event.target.value)}
         />
         {searchResults.length !== 0 && (
-          <SearchResults>
+          <ProfileSearchResults>
             <ul>
               {searchResults.map(username => (
-                <SearchResultItem key={username}>
-                  <Link to={`/${username}`}>{username}</Link>
-                </SearchResultItem>
+                <ProfileSearchResult key={username} />
               ))}
             </ul>
-          </SearchResults>
+          </ProfileSearchResults>
         )}
         {Boolean(!searchResults.length && searchValue) && (
-          <SearchResults>
+          <ProfileSearchResults>
             <Text as="span">No users found</Text>
-          </SearchResults>
+          </ProfileSearchResults>
         )}
       </Container>
     </Content>

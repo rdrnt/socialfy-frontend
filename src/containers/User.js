@@ -79,7 +79,7 @@ const User = ({ match }) => {
   const uiContext = React.useContext(UIContext);
 
   const refreshUserSpotify = async () => {
-    await API.refreshUserSpotifyInfo(user.username);
+    await API.refreshUserSpotifyInfo(user.profile.username);
   };
 
   // Runs when we get a new username in the url
@@ -92,7 +92,9 @@ const User = ({ match }) => {
     // If we have a user, initialize the user listener & set initial data
     if (firebaseUser) {
       // Set the header username
-      uiContext.header.setSublabel(`${firebaseUser.username}'s profile`);
+      uiContext.header.setSublabel(
+        `${firebaseUser.profile.username}'s profile`
+      );
       // Initialize the listener
       const listener = Firebase.onUserChanged({
         id: firebaseUser.id,
