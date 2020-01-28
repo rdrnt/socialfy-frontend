@@ -51,21 +51,6 @@ const AnimatedTempScreen = posed(TempScreen)({
   },
 });
 
-const spotifyReducer = (state, action) => {
-  switch (action.type) {
-    case 'NOW_PLAYING':
-      return { ...state, nowPlaying: action.payload };
-    case 'RECENTLY_PLAYED':
-      return { ...state, recentlyPlayed: action.payload };
-    case 'TOP_PLAYED':
-      return { ...state, topPlayed: action.payload };
-    case 'TOP_ARTISTS':
-      return { ...state, topArtists: action.payload };
-    default:
-      return { ...state };
-  }
-};
-
 function useEffectAsync(effect, inputs = []) {
   React.useEffect(() => {
     effect();
@@ -79,6 +64,7 @@ const User = ({ match }) => {
   const uiContext = React.useContext(UIContext);
 
   const refreshUserSpotify = async () => {
+    console.log('Refreshing user spotify');
     await API.refreshUserSpotifyInfo(user.profile.username);
   };
 
@@ -99,7 +85,6 @@ const User = ({ match }) => {
       const listener = Firebase.onUserChanged({
         id: firebaseUser.id,
         onChange: changedUser => {
-          console.log('User changed', changedUser);
           setUser(changedUser);
         },
       });
@@ -119,12 +104,10 @@ const User = ({ match }) => {
   // When the user changes (i.e auth info, username, etc);
   React.useEffect(() => {
     if (user) {
-      console.log('User changed useEffect');
       refreshUserSpotify();
 
       // Create the timer to fetch spotify data every 20 minutes
       const updateSpotifyTimer = setInterval(async () => {
-        console.log('Refreshing spotify....', user);
         await refreshUserSpotify();
       }, 90 * 1000);
 
