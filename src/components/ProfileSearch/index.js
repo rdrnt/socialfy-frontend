@@ -8,7 +8,7 @@ import config from '../../config';
 
 const Container = styled.div`
   width: 100%;
-  max-width: 800px;
+  max-width: 400px;
   padding: ${config.spacing}px;
   border-radius: 8px;
   background-color: ${config.colors.backgroundSecondary};

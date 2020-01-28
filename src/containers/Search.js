@@ -22,8 +22,7 @@ const Content = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
 
     > h1 {
       margin-top: 15px;
@@ -79,8 +78,8 @@ const Search = ({}) => {
         {searchResults.length !== 0 && (
           <ProfileSearchResults>
             <ul>
-              {searchResults.map(username => (
-                <ProfileSearchResult key={username} />
+              {searchResults.map(profile => (
+                <ProfileSearchResult key={profile.username} {...profile} />
               ))}
             </ul>
           </ProfileSearchResults>

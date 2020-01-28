@@ -53,7 +53,7 @@ const Firebase = {
     const matchingUsers = matchingUserDocs.docs.map(userDoc => {
       const userData = userDoc.data();
 
-      return userData.username;
+      return userData.profile;
     });
 
     return matchingUsers;
