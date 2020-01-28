@@ -43,7 +43,7 @@ const Content = styled.div`
   }
 `;
 
-const SearchIcon = styled.div`
+const SearchIcon = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -103,10 +103,9 @@ const Header = () => {
             <Title to={config.routes.HOME}>Socialfy</Title>
             {header.sublabel && <Text as="span">{header.sublabel}</Text>}
           </Content>
-          <SearchIcon>
+          <SearchIcon to={config.routes.SEARCH}>
             <Icon
               name="search"
-              onClick={() => history.push(config.routes.SEARCH)}
               color={isOnSearchPage ? config.colors.primary : 'white'}
             />
           </SearchIcon>
