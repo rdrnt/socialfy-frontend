@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import Container from '../container';
 import Text, { DefaultTextStyles } from '../Text';
@@ -60,7 +60,6 @@ const Header = () => {
   const [isOnSearchPage, setIsOnSearchPage] = React.useState(false);
 
   const location = useLocation();
-  const history = useHistory();
 
   const onScroll = () => {
     const value = window.scrollY;

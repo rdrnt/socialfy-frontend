@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BeatLoader } from 'react-spinners';
-import posed, { PoseGroup } from 'react-pose';
 
 import Container from '../components/container';
 import Text from '../components/Text';
@@ -15,7 +13,6 @@ import {
 import { UIContext } from '../contexts';
 
 import { Firebase, API } from '../helpers';
-import config from '../config';
 
 const Content = styled.div`
   height: 100%;
@@ -26,30 +23,6 @@ const Content = styled.div`
     width: 100%;
   }
 `;
-
-const TempScreen = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: ${config.colors.background};
-  z-index: ${config.zIndex.MAX};
-`;
-
-const AnimatedTempScreen = posed(TempScreen)({
-  enter: {
-    opacity: 1,
-  },
-  exit: {
-    opacity: 0,
-    delay: 500,
-  },
-});
 
 function useEffectAsync(effect, inputs = []) {
   React.useEffect(() => {
@@ -77,6 +50,8 @@ const User = ({ match }) => {
 
     // If we have a user, initialize the user listener & set initial data
     if (firebaseUser) {
+      // Close the close the loader
+      uiContext.loader.close();
       // Set the header username
       uiContext.header.setSublabel(
         `${firebaseUser.profile.username}'s profile`
@@ -118,25 +93,20 @@ const User = ({ match }) => {
     }
   }, [user]);
 
+  React.useEffect(() => {
+    if (!userNotFound && !user) {
+      // open the laoder
+      uiContext.loader.open('Loading...');
+    }
+  }, [user, userNotFound]);
+
   return (
     <Content>
       <Container>
-        <PoseGroup>
-          {!userNotFound && !user && (
-            <AnimatedTempScreen key="loading">
-              <Text as="h1">Loading...</Text>
-              <BeatLoader color={config.colors.primary} />
-            </AnimatedTempScreen>
-          )}
-          {userNotFound && !user && (
-            <AnimatedTempScreen key="not found">
-              <Text as="h1">No user</Text>
-            </AnimatedTempScreen>
-          )}
-        </PoseGroup>
+        {userNotFound && !user && <Text as="h1">No user</Text>}
         {user && (
           <div id="spotifyContent">
-            <NowPlaying song={user.spotify.nowPlaying} autoSize={true} />
+            <NowPlaying song={user.spotify.nowPlaying} />
             <RecentlyPlayed songs={user.spotify.recentlyPlayed} />
             <TopPlayed songs={user.spotify.topPlayed} />
             <TopArtists artists={user.spotify.topArtists} />

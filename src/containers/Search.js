@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDebounce } from 'use-debounce';
-import { Link } from 'react-router-dom';
 
 import Container from '../components/container';
 import Text, { DefaultTextStyles } from '../components/Text';
@@ -44,7 +43,7 @@ const SearchBox = styled.input`
   font-weight: 600;
 `;
 
-const Search = ({}) => {
+const Search = () => {
   // the search value
   const [searchValue, setSearchValue] = React.useState('');
   const [debouncedSearchValue] = useDebounce(searchValue, 200);

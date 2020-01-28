@@ -9,11 +9,7 @@ const getHeight = props => {
     return '200px';
   }
 
-  if (props.autoSize) {
-    return 'auto';
-  }
-
-  return 'calc(100vh - 150px)';
+  return 'auto';
 };
 
 const Container = styled.div`
@@ -33,9 +29,9 @@ const Container = styled.div`
   }
 `;
 
-const SpotifyWidgetLayout = ({ children, title, error, autoSize }) => {
+const SpotifyWidgetLayout = ({ children, title, error }) => {
   return (
-    <Container error={error} autoSize={autoSize}>
+    <Container error={error}>
       <Text as="h2">{title}</Text>
       <div>{children}</div>
     </Container>
