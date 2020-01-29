@@ -56,6 +56,14 @@ export const DefaultTextStyles = {
     text-transform: uppercase;
     letter-spacing: 1px;
   `,
+  a: css`
+    font-size: 16px;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  `,
 };
 
 const StyledText = styled.h1`

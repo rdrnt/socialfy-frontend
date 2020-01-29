@@ -30,6 +30,8 @@ function useEffectAsync(effect, inputs = []) {
   }, inputs);
 }
 
+let firebaseUserListener = undefined;
+
 const User = ({ match }) => {
   const [user, setUser] = React.useState(undefined);
   const [userNotFound, setUserNotFound] = React.useState(false);
@@ -50,33 +52,23 @@ const User = ({ match }) => {
 
     // If we have a user, initialize the user listener & set initial data
     if (firebaseUser) {
+      // Set the header to show the profile
+      uiContext.header.showProfile(firebaseUser.profile);
       // Close the close the loader
       uiContext.loader.close();
-      // Set the header username
-      uiContext.header.setSublabel(
-        `${firebaseUser.profile.username}'s profile`
-      );
       // Initialize the listener
-      const listener = Firebase.onUserChanged({
+      firebaseUserListener = Firebase.onUserChanged({
         id: firebaseUser.id,
         onChange: changedUser => {
           setUser(changedUser);
         },
       });
-
-      return () => {
-        if (listener) {
-          console.log('Removing listener');
-          listener();
-        }
-        uiContext.header.setSublabel('');
-      };
     } else {
       setUserNotFound(true);
     }
   }, [match.params.userId]);
 
-  // When the user changes (i.e auth info, username, etc);
+  // When the user changes (i.e auth info, username, etc), or we dont have a user
   React.useEffect(() => {
     if (user) {
       refreshUserSpotify();
@@ -87,7 +79,15 @@ const User = ({ match }) => {
       }, 90 * 1000);
 
       return () => {
+        // Remove the listener
+        if (firebaseUserListener) {
+          firebaseUserListener();
+          firebaseUserListener = undefined;
+        }
+        // Remove the profile from the header
+        uiContext.header.showProfile(undefined);
         console.log('User changed effect goodbye');
+        // Remove the refresh timer
         clearInterval(updateSpotifyTimer);
       };
     }

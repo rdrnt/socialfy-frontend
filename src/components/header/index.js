@@ -4,16 +4,19 @@ import { Link, useLocation } from 'react-router-dom';
 
 import Container from '../container';
 import Text, { DefaultTextStyles } from '../Text';
+import Icon from '../Icon';
+import HeaderProfileContent from './Profile';
 
 import config from '../../config';
-import Icon from '../Icon';
 import { UIContext } from '../../contexts';
+
+export const HEADER_HEIGHT = 70;
 
 const Root = styled.header`
   position: sticky;
   top: 0;
   left: 0;
-  min-height: 70px;
+  min-height: ${HEADER_HEIGHT}px;
   background-color: ${config.colors.background};
   color: white;
   border-bottom: ${props =>
@@ -22,25 +25,24 @@ const Root = styled.header`
   /* The container */
   > div {
     height: 100%;
+    width: 100%;
   }
 `;
 
 const Layout = styled.div`
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const Content = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-grow: 1;
-
-  > span {
-    margin-bottom: 10px;
-  }
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  padding: ${config.spacing}px 0;
 `;
 
 const SearchIcon = styled(Link)`
@@ -50,7 +52,6 @@ const SearchIcon = styled(Link)`
 `;
 
 const Title = styled(Link)`
-  ${DefaultTextStyles['h2']};
   text-decoration: none;
   color: white;
 `;
@@ -99,15 +100,19 @@ const Header = () => {
       <Container>
         <Layout>
           <Content>
-            <Title to={config.routes.HOME}>Socialfy</Title>
-            {header.sublabel && <Text as="span">{header.sublabel}</Text>}
+            <Title to={config.routes.HOME}>
+              <Text as="h2">Socialfy</Text>
+            </Title>
+            <SearchIcon to={config.routes.SEARCH}>
+              <Icon
+                name="search"
+                color={isOnSearchPage ? config.colors.primary : 'white'}
+              />
+            </SearchIcon>
           </Content>
-          <SearchIcon to={config.routes.SEARCH}>
-            <Icon
-              name="search"
-              color={isOnSearchPage ? config.colors.primary : 'white'}
-            />
-          </SearchIcon>
+          {header.profileToShow && (
+            <HeaderProfileContent profile={header.profileToShow} />
+          )}
         </Layout>
       </Container>
     </Root>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { AiOutlineQrcode } from 'react-icons/ai';
 import { MdSearch, MdClose } from 'react-icons/md';
+import { FaSpotify } from 'react-icons/fa';
 
 import config from '../../config';
 
@@ -8,6 +9,7 @@ const IconTable = {
   qrcode: <AiOutlineQrcode />,
   search: <MdSearch />,
   x: <MdClose />,
+  spotify: <FaSpotify />,
 };
 
 const useHover = () => {

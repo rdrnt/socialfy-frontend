@@ -4,10 +4,10 @@ import Loader from '../components/Loader';
 
 export const UIContext = React.createContext({
   header: {
-    sublabel: '',
     borderOpacity: 0,
-    setSublabel: () => {},
     setBorderOpacity: () => {},
+    showProfile: () => {},
+    profileToShow: undefined,
   },
   loader: {
     open: false,
@@ -16,8 +16,8 @@ export const UIContext = React.createContext({
 });
 
 export const UIContextProvider = props => {
-  const [headerSublabel, setHeaderSublabel] = React.useState('');
   const [headerBorderOpacity, setHeaderBorderOpacity] = React.useState(0);
+  const [headerShowProfile, setHeaderShowProfile] = React.useState(undefined);
 
   const [loader, setLoaderSate] = React.useState({ open: false, message: '' });
 
@@ -33,10 +33,10 @@ export const UIContextProvider = props => {
     <UIContext.Provider
       value={{
         header: {
-          sublabel: headerSublabel,
           borderOpacity: headerBorderOpacity,
-          setSublabel: setHeaderSublabel,
           setBorderOpacity: setHeaderBorderOpacity,
+          profileToShow: headerShowProfile,
+          showProfile: setHeaderShowProfile,
         },
         loader: {
           ...loader,
