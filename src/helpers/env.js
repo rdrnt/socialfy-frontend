@@ -22,7 +22,7 @@ const Environment = {
     if (isDevelopment) {
       return `http://localhost:3000/${username}`;
     } else {
-      return `www.sharify.app/${username}`;
+      return `www.socialfy.app/${username}`;
     }
   },
 };
