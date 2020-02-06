@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Loader from '../components/Loader';
+import Modal from '../components/Modal';
 
 export const UIContext = React.createContext({
   header: {
@@ -13,6 +14,13 @@ export const UIContext = React.createContext({
     open: false,
     message: '',
   },
+  modal: {
+    open: false,
+    type: '',
+    extra: {},
+    openModal: () => {},
+    closeModal: () => {},
+  },
 });
 
 export const UIContextProvider = props => {
@@ -20,6 +28,8 @@ export const UIContextProvider = props => {
   const [headerShowProfile, setHeaderShowProfile] = React.useState(undefined);
 
   const [loader, setLoaderSate] = React.useState({ open: false, message: '' });
+
+  const [modal, setModalState] = React.useState({ open: false, type: '' });
 
   const openLoader = (message = '') => {
     setLoaderSate({ open: true, message });
@@ -29,6 +39,13 @@ export const UIContextProvider = props => {
     setLoaderSate({ open: false, message: '' });
   };
 
+  const openModal = (type = '', extra = {}) => {
+    setModalState({ open: true, type, extra });
+  };
+
+  const closeModal = () => {
+    setModalState({ open: false, type: '', extra: {} });
+  };
   return (
     <UIContext.Provider
       value={{
@@ -43,9 +60,15 @@ export const UIContextProvider = props => {
           open: openLoader,
           close: closeLoader,
         },
+        modal: {
+          ...modal,
+          closeModal,
+          openModal,
+        },
       }}
     >
       <Loader {...loader} />
+      <Modal {...modal} close={closeModal} />
       {props.children}
     </UIContext.Provider>
   );

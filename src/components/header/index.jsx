@@ -57,7 +57,7 @@ const Title = styled(Link)`
 `;
 
 const Header = () => {
-  const { header } = React.useContext(UIContext);
+  const { header, modal } = React.useContext(UIContext);
   const [isOnSearchPage, setIsOnSearchPage] = React.useState(false);
 
   const location = useLocation();
@@ -111,7 +111,10 @@ const Header = () => {
             </SearchIcon>
           </Content>
           {header.profileToShow && (
-            <HeaderProfileContent profile={header.profileToShow} />
+            <HeaderProfileContent
+              profile={header.profileToShow}
+              openModal={modal.openModal}
+            />
           )}
         </Layout>
       </Container>

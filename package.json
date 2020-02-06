@@ -4,12 +4,9 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "@reach/dialog": "^0.8.0",
     "firebase": "^7.5.0",
     "framer-motion": "^1.8.3",
-    "passport": "^0.4.0",
-    "passport-spotify": "^1.1.0",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
     "react": "^16.12.0",
@@ -20,10 +17,19 @@
     "react-scripts": "3.2.0",
     "react-spinners": "^0.8.0",
     "react-visibility-sensor": "^5.1.1",
-    "request": "^2.88.0",
     "styled-components": "^4.4.1",
     "typeface-poppins": "^0.0.72",
     "use-debounce": "^3.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.17.0",
+    "prettier": "^1.19.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -47,15 +53,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint": "^6.7.2",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-react": "^7.17.0",
-    "prettier": "^1.19.1"
   }
 }

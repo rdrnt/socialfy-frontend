@@ -39,6 +39,13 @@ const IconLink = styled.a`
   margin-right: ${config.spacing / 2}px;
 `;
 
+const IconButton = styled.button`
+  border: none;
+  padding: 0;
+  margin: 0;
+  height: 25px;
+`;
+
 const ProfileImage = styled.img`
   height: 40px;
   width: 40px;
@@ -46,7 +53,7 @@ const ProfileImage = styled.img`
   margin-right: 12px;
 `;
 
-const HeaderProfileContent = ({ profile }) => {
+const HeaderProfileContent = ({ profile, openModal }) => {
   return (
     <RootContainer>
       <BarContent>
@@ -62,7 +69,14 @@ const HeaderProfileContent = ({ profile }) => {
           >
             <Icon name="spotify" color={config.colors.primary} />
           </IconLink>
-          <Icon name="qrcode" color={config.colors.primary} />
+          <IconButton
+            type="button"
+            onClick={() =>
+              openModal('USER_SHARE', { username: profile.username })
+            }
+          >
+            <Icon name="qrcode" color={config.colors.primary} />
+          </IconButton>
         </Items>
       </BarContent>
     </RootContainer>
