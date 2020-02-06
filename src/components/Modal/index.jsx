@@ -10,6 +10,7 @@ import Icon from '../Icon';
 import UserShareModal from './UserShare';
 
 import config from '../../config';
+import { Style } from '../../helpers';
 
 const ModalLookupTable = {
   USER_SHARE: <UserShareModal />,
@@ -43,14 +44,15 @@ const CloseModalButton = styled.button`
 `;
 
 const StyledDialogOverlay = styled(DialogOverlay)`
-  height: 100vh;
-  width: 100vw;
-`;
-
-const StyledDialogContent = styled.div`
-  height: 75%;
-  width: 50%;
-  background-color: grey;
+  [data-reach-dialog-content] {
+    background-color: ${config.colors.background};
+    height: 75%;
+    width: 50%;
+    ${Style.size.mobile`
+    height: 90%;
+    width: 100%;
+  `}
+  }
 `;
 
 const Modal = ({ open, type, extra, close }) => {
@@ -59,7 +61,13 @@ const Modal = ({ open, type, extra, close }) => {
   return (
     <AnimatePresence>
       {open && modalFromType && (
-        <StyledDialogOverlay key="modal" onDismiss={close}>
+        <StyledDialogOverlay
+          key="modal"
+          onDismiss={() => {
+            console.log('dismiss!');
+            close();
+          }}
+        >
           <AnimatedContainer
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -69,12 +77,12 @@ const Modal = ({ open, type, extra, close }) => {
               <Icon name="x" color="white" />
             </CloseModalButton>
             <Container>
-              <StyledDialogContent aria-label="User modal">
+              <DialogContent aria-label="User modal">
                 {React.cloneElement(modalFromType, {
                   close,
                   data: extra,
                 })}
-              </StyledDialogContent>
+              </DialogContent>
             </Container>
           </AnimatedContainer>
         </StyledDialogOverlay>
