@@ -32,6 +32,13 @@ const Items = styled.div`
   height: 100%;
 `;
 
+const IconLink = styled.a`
+  padding: 0;
+  margin: 0;
+  height: 25px;
+  margin-right: ${config.spacing / 2}px;
+`;
+
 const ProfileImage = styled.img`
   height: 40px;
   width: 40px;
@@ -48,7 +55,13 @@ const HeaderProfileContent = ({ profile }) => {
           <Text as="p">{profile.username}</Text>
         </Items>
         <Items>
-          <Icon name="spotify" color={config.colors.primary} />
+          <IconLink
+            href={profile.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="spotify" color={config.colors.primary} />
+          </IconLink>
           <Icon name="qrcode" color={config.colors.primary} />
         </Items>
       </BarContent>

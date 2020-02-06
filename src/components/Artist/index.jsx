@@ -17,7 +17,13 @@ const ArtistNames = ({ artists = [], tagStyle = 'p' }) =>
     const isNotLastItem = Boolean(artists.length - 1 === index);
 
     return (
-      <Name key={artist.url} href={artist.url} tagStyle={tagStyle}>
+      <Name
+        key={artist.url}
+        href={artist.url}
+        tagStyle={tagStyle}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {artist.name}
         {!isNotLastItem && `, `}
       </Name>
