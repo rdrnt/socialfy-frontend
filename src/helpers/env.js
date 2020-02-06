@@ -17,6 +17,14 @@ const Environment = {
       ? 'https://us-central1-sharify-dev.cloudfunctions.net/api'
       : 'https://us-central1-sharify-5fb5c.cloudfunctions.net/api',
   },
+  getProfileUrl: username => {
+    const isDevelopment = checkIfDevelopment();
+    if (isDevelopment) {
+      return `http://localhost:3000/${username}`;
+    } else {
+      return `www.sharify.app/${username}`;
+    }
+  },
 };
 
 export default Environment;

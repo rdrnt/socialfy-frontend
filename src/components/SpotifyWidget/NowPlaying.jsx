@@ -25,8 +25,8 @@ const Content = styled.div`
 `;
 
 const AlbumArt = styled.img`
-  height: 300px;
-  width: 300px;
+  height: 250px;
+  width: 250px;
   background-color: ${config.colors.primary};
 
   margin: 0 20px 0 0;
