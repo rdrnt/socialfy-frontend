@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 
 import Container from '../container';
-import Text, { DefaultTextStyles } from '../Text';
+import Text from '../Text';
 import Icon from '../Icon';
 import HeaderProfileContent from './Profile';
 

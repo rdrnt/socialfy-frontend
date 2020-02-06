@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import Container from '../components/container';
 import Text from '../components/Text';

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'typeface-poppins';
+import '@reach/dialog/styles.css';
 
 import App from './App';
 

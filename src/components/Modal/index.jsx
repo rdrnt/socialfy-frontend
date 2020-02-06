@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Dialog, DialogContent, DialogOverlay } from '@reach/dialog';
+import { DialogContent, DialogOverlay } from '@reach/dialog';
 import { motion, AnimatePresence } from 'framer-motion';
-import '@reach/dialog/styles.css';
 
 import Container from '../container';
 import Icon from '../Icon';

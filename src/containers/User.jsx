@@ -6,7 +6,6 @@ import Text from '../components/Text';
 import {
   RecentlyPlayed,
   NowPlaying,
-  InfoBar,
   TopPlayed,
   TopArtists,
 } from '../components/SpotifyWidget';
@@ -110,7 +109,6 @@ const User = ({ match }) => {
             <RecentlyPlayed songs={user.spotify.recentlyPlayed} />
             <TopPlayed songs={user.spotify.topPlayed} />
             <TopArtists artists={user.spotify.topArtists} />
-            <InfoBar />
           </div>
         )}
       </Container>
