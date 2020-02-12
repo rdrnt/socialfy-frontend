@@ -22,10 +22,6 @@ const Content = styled.div`
 
     > p {
       margin-top: ${config.spacing}px;
-
-      &#emphasis {
-        text-decoration: underline;
-      }
     }
   }
 `;
@@ -74,7 +70,7 @@ const Auth = () => {
         <Text as="p">
           The only account information we save is your profile image & username.
         </Text>
-        <Text as="p" id="emphasis">
+        <Text as="p" weight="bold">
           We do no not see your password or store it.
         </Text>
 

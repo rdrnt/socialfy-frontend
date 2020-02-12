@@ -25,7 +25,6 @@ const Content = styled.div`
 `;
 
 const AuthButton = styled(Link)`
-  display: inline-block;
   width: 160px;
   border-radius: 50px;
   background-color: white;
@@ -39,7 +38,7 @@ const AuthButton = styled(Link)`
   text-decoration: none;
 
   :hover {
-    border: 3px solid white;
+    border: 2px solid white;
     background-color: ${config.colors.background};
     color: white;
   }

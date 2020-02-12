@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import Container from '../container';
 import Text from '../Text';
@@ -45,10 +45,16 @@ const Content = styled.div`
   padding: ${config.spacing}px 0;
 `;
 
-const SearchIcon = styled(Link)`
+const SearchIcon = styled(NavLink)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.active {
+    > svg {
+      fill: ${config.colors.primary};
+    }
+  }
 `;
 
 const Title = styled(Link)`
@@ -58,9 +64,6 @@ const Title = styled(Link)`
 
 const Header = () => {
   const { header, modal } = React.useContext(UIContext);
-  const [isOnSearchPage, setIsOnSearchPage] = React.useState(false);
-
-  const location = useLocation();
 
   const onScroll = () => {
     const value = window.scrollY;
@@ -83,18 +86,6 @@ const Header = () => {
     }
   }, []);
 
-  React.useEffect(() => {
-    // Check if the pathname is equal to the search page path
-    const isPathnameSearch = location.pathname === config.routes.SEARCH;
-    // If the pathname is equal to /search, and the state is false, set it to true
-    if (isPathnameSearch && !isOnSearchPage) {
-      setIsOnSearchPage(true);
-    } else if (!isPathnameSearch && isOnSearchPage) {
-      // If the pathname is not search and the state is true, set it to false
-      setIsOnSearchPage(false);
-    }
-  }, [location.pathname]);
-
   return (
     <Root borderOpacity={header.borderOpacity}>
       <Container>
@@ -104,10 +95,7 @@ const Header = () => {
               <Text as="h2">Socialfy</Text>
             </Title>
             <SearchIcon to={config.routes.SEARCH}>
-              <Icon
-                name="search"
-                color={isOnSearchPage ? config.colors.primary : 'white'}
-              />
+              <Icon name="search" />
             </SearchIcon>
           </Content>
           {header.profileToShow && (
