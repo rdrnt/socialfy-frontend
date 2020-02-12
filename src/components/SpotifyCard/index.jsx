@@ -37,18 +37,9 @@ const Content = styled(motion.div)`
   }
 `;
 
-const animationConfig = {
-  enter: {
-    opacity: 1,
-  },
-  exit: {
-    opacity: 0,
-  },
-};
-
 const SpotifyCard = ({ albumArt, name, artists = [], url, ...rest }) => {
   return (
-    <Content key={name} {...animationConfig} {...rest}>
+    <Content {...rest}>
       <img src={albumArt} alt="" />
       <Text type="p" as="h6">
         {name}

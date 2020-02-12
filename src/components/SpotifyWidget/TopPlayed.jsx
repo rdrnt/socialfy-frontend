@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { AnimatePresence } from 'framer-motion';
 
-import SpotifyWidgetLayout from './Layout';
+import SpotifyWidgetLayout, { listItemAnimationProps } from './Layout';
 import SpotifyCard from '../SpotifyCard';
 
 const Content = styled.div`
@@ -27,18 +26,16 @@ const TopPlayed = ({ songs, ...rest }) => {
       {...rest}
     >
       <Content>
-        {songs.length && (
-          <AnimatePresence initial={true}>
-            {songs.map(item => (
-              <SpotifyCard
-                key={item.url}
-                url={item.url}
-                albumArt={item.album.albumArt}
-                name={item.name}
-                artists={item.artists}
-              />
-            ))}
-          </AnimatePresence>
+        {songs.map((item, index) => (
+          <SpotifyCard
+            key={item.url}
+            url={item.url}
+            albumArt={item.album.albumArt}
+            name={item.name}
+            artists={item.artists}
+            {...listItemAnimationProps(index)}
+          />
+        ))}
         )}
       </Content>
     </SpotifyWidgetLayout>

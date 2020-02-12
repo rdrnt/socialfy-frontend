@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { AnimatePresence } from 'framer-motion';
 
-import SpotifyWidgetLayout from './Layout';
+import SpotifyWidgetLayout, { listItemAnimationProps } from './Layout';
 import SpotifyCard from '../SpotifyCard';
 
 const Content = styled.div`
@@ -27,18 +27,15 @@ const TopArtists = ({ artists, ...rest }) => {
       {...rest}
     >
       <Content>
-        {artists.length && (
-          <AnimatePresence initial={true}>
-            {artists.map(artist => (
-              <SpotifyCard
-                key={artist.url}
-                url={artist.url}
-                albumArt={artist.image}
-                name={artist.name}
-              />
-            ))}
-          </AnimatePresence>
-        )}
+        {artists.map((artist, index) => (
+          <SpotifyCard
+            key={artist.url}
+            url={artist.url}
+            albumArt={artist.image}
+            name={artist.name}
+            {...listItemAnimationProps(index)}
+          />
+        ))}
       </Content>
     </SpotifyWidgetLayout>
   );
