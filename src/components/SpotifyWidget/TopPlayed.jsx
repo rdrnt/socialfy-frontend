@@ -23,7 +23,7 @@ const TopPlayed = ({ songs, ...rest }) => {
   return (
     <SpotifyWidgetLayout
       title="Top Played"
-      error={Boolean(songs.length)}
+      error={Boolean(songs.length === 0)}
       {...rest}
     >
       <Content>

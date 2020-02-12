@@ -24,7 +24,7 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
   return (
     <SpotifyWidgetLayout
       title="Recently Played"
-      error={Boolean(songs.length)}
+      error={Boolean(songs.length === 0)}
       {...rest}
     >
       <Content>

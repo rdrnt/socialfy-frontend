@@ -29,17 +29,31 @@ function useEffectAsync(effect, inputs = []) {
   }, inputs);
 }
 
+const isUserSpotifyEmpty = userSpotify => {
+  // Returns true if theres any issues
+  const errors = Object.keys(userSpotify).map(key => {
+    const value = userSpotify[key];
+    if (value instanceof Array && value.length === 0) {
+      return true;
+    }
+
+    return false;
+  });
+
+  return Boolean(errors).length === Object.keys(userSpotify).length;
+};
+
 let firebaseUserListener = undefined;
 
 const User = ({ match }) => {
   const [user, setUser] = React.useState(undefined);
-  const [userNotFound, setUserNotFound] = React.useState(false);
+  const [userError, setUserError] = React.useState(''); // can be 'NOT_FOUND', 'NO_DATA'
 
   const uiContext = React.useContext(UIContext);
 
-  const refreshUserSpotify = async () => {
-    console.log('Refreshing user spotify');
-    await API.refreshUserSpotifyInfo(user.profile.username);
+  const refreshUserSpotify = async userToRefresh => {
+    console.log('Refreshing user spotify...');
+    await API.refreshUserSpotifyInfo(userToRefresh.profile.username);
   };
 
   // Runs when we get a new username in the url
@@ -51,6 +65,8 @@ const User = ({ match }) => {
 
     // If we have a user, initialize the user listener & set initial data
     if (firebaseUser) {
+      // Refresh their spotify on first load
+      await refreshUserSpotify(firebaseUser);
       // Set the header to show the profile
       uiContext.header.showProfile(firebaseUser.profile);
       // Close the close the loader
@@ -63,18 +79,20 @@ const User = ({ match }) => {
         },
       });
     } else {
-      setUserNotFound(true);
+      setUserError('NOT_FOUND');
     }
   }, [match.params.userId]);
 
   // When the user changes (i.e auth info, username, etc), or we dont have a user
   React.useEffect(() => {
     if (user) {
-      refreshUserSpotify();
+      // Check if they have no spotify data
+      const isSpotifyEmpty = isUserSpotifyEmpty(user.spotify);
+      if (isSpotifyEmpty) setUserError('NO_DATA');
 
       // Create the timer to fetch spotify data every 20 minutes
       const updateSpotifyTimer = setInterval(async () => {
-        await refreshUserSpotify();
+        await refreshUserSpotify(user);
       }, 90 * 1000);
 
       return () => {
@@ -93,16 +111,28 @@ const User = ({ match }) => {
   }, [user]);
 
   React.useEffect(() => {
-    if (!userNotFound && !user) {
+    if (userError === '' && !user) {
       // open the laoder
-      uiContext.loader.open('Loading...');
+      uiContext.loader.show('Loading...');
+    } else if (userError !== '') {
+      uiContext.loader.close();
     }
-  }, [user, userNotFound]);
+  }, [user, userError]);
+
+  const renderUserError = () => {
+    if (userError === 'NOT_FOUND') {
+      return <Text as="h1">User not found</Text>;
+    }
+    if (userError === 'NO_DATA') {
+      return <Text as="h1">No data for user</Text>;
+    }
+    return null;
+  };
 
   return (
     <Content>
       <Container>
-        {userNotFound && !user && <Text as="h1">No user</Text>}
+        {userError && renderUserError()}
         {user && (
           <div id="spotifyContent">
             <NowPlaying song={user.spotify.nowPlaying} />

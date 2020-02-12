@@ -57,13 +57,13 @@ export const UIContextProvider = props => {
         },
         loader: {
           ...loader,
-          open: openLoader,
+          show: openLoader,
           close: closeLoader,
         },
         modal: {
           ...modal,
-          closeModal,
-          openModal,
+          close: closeModal,
+          show: openModal,
         },
       }}
     >

@@ -4,14 +4,6 @@ import styled from 'styled-components';
 import Text from '../Text';
 import config from '../../config';
 
-const getHeight = props => {
-  if (props.error) {
-    return '200px';
-  }
-
-  return 'auto';
-};
-
 const Container = styled.div`
   width: 100%;
   background-color: ${config.colors.background};
@@ -24,18 +16,17 @@ const Container = styled.div`
   }
 
   > div {
-    min-height: ${getHeight};
+    height: 100%;
     width: 100%;
   }
 `;
 
-const SpotifyWidgetLayout = ({ children, title, error }) => {
-  return (
-    <Container error={error}>
+const SpotifyWidgetLayout = ({ children, title, error }) =>
+  error ? null : (
+    <Container>
       <Text as="h2">{title}</Text>
       <div>{children}</div>
     </Container>
   );
-};
 
 export default SpotifyWidgetLayout;

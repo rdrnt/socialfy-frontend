@@ -23,7 +23,7 @@ const TopArtists = ({ artists, ...rest }) => {
   return (
     <SpotifyWidgetLayout
       title="Top Artists"
-      error={Boolean(artists.length)}
+      error={Boolean(artists.length === 0)}
       {...rest}
     >
       <Content>
