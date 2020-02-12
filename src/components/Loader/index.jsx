@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import posed, { PoseGroup } from 'react-pose';
+import { motion, AnimatePresence } from 'framer-motion';
 import { BeatLoader } from 'react-spinners';
 
 import Text from '../Text';
 
 import config from '../../config';
 
-const Content = styled.div`
+const Content = styled(motion.div)`
   position: absolute;
   top: 0;
   left: 0;
@@ -22,26 +22,25 @@ const Content = styled.div`
   align-items: center;
 `;
 
-const AnimatedLoader = posed(Content)({
-  enter: {
-    opacity: 1,
+const animationConfig = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: {
+    duration: 0.2,
   },
-  exit: {
-    opacity: 0,
-    delay: 500,
-  },
-});
+  exit: { opacity: 0 },
+};
 
 const Loader = ({ open, message }) => {
   return (
-    <PoseGroup>
+    <AnimatePresence>
       {open && (
-        <AnimatedLoader key="loader">
+        <Content key="loader" {...animationConfig}>
           <Text as="h1">{message}</Text>
           <BeatLoader color={config.colors.primary} />
-        </AnimatedLoader>
+        </Content>
       )}
-    </PoseGroup>
+    </AnimatePresence>
   );
 };
 

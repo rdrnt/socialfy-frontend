@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import posed from 'react-pose';
+import { motion } from 'framer-motion';
 
 import Text from '../Text';
 
 import ArtistNames from '../Artist';
 import config from '../../config';
 
-const Content = styled.div`
+const Content = styled(motion.div)`
   min-height: 250px;
   width: 200px;
   padding: ${config.spacing * 1.5}px;
@@ -37,18 +37,18 @@ const Content = styled.div`
   }
 `;
 
-const AnimatedContent = posed(Content)({
+const animationConfig = {
   enter: {
     opacity: 1,
   },
   exit: {
     opacity: 0,
   },
-});
+};
 
 const SpotifyCard = ({ albumArt, name, artists = [], url, ...rest }) => {
   return (
-    <AnimatedContent key={name} {...rest}>
+    <Content key={name} {...animationConfig} {...rest}>
       <img src={albumArt} alt="" />
       <Text type="p" as="h6">
         {name}
@@ -58,7 +58,7 @@ const SpotifyCard = ({ albumArt, name, artists = [], url, ...rest }) => {
           <ArtistNames artists={artists} tagStyle="span" />
         </Text>
       )}
-    </AnimatedContent>
+    </Content>
   );
 };
 

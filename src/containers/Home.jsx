@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import posed from 'react-pose';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 import Container from '../components/container';
@@ -44,31 +44,17 @@ const AuthButton = styled(Link)`
   }
 `;
 
-const TimedReveal = posed.div({
-  show: {
-    opacity: 1,
-  },
-  hide: {
-    opacity: 0,
-  },
-});
-
 const Home = () => {
-  const [revealContent, showRevealContent] = React.useState(false);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      showRevealContent(true);
-    }, 1000);
-  }, []);
-
   return (
     <Content>
       <Container>
         <Text as="h1">Share what you're currently jamming too.</Text>
-        <TimedReveal pose={revealContent ? 'show' : 'hide'}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 1, duration: 1 } }}
+        >
           <AuthButton to={config.routes.AUTH}>Get started</AuthButton>
-        </TimedReveal>
+        </motion.div>
       </Container>
     </Content>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { PoseGroup } from 'react-pose';
+import { AnimatePresence } from 'framer-motion';
 
 import SpotifyWidgetLayout from './Layout';
 
@@ -29,7 +29,7 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
     >
       <Content>
         {songs.length && (
-          <PoseGroup animateOnMount={true}>
+          <AnimatePresence initial={true}>
             {songs.map(item => (
               <SpotifyCard
                 key={item.url}
@@ -39,7 +39,7 @@ const RecentlyPlayed = ({ songs, ...rest }) => {
                 artists={item.artists}
               />
             ))}
-          </PoseGroup>
+          </AnimatePresence>
         )}
       </Content>
     </SpotifyWidgetLayout>
