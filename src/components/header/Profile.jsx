@@ -47,9 +47,9 @@ const IconButton = styled.button`
 `;
 
 const ProfileImage = styled.img`
-  height: 40px;
-  width: 40px;
-  border-radius: 20px;
+  height: 35px;
+  width: 35px;
+  border-radius: 17.5px;
   margin-right: 12px;
 `;
 

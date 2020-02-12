@@ -30,17 +30,22 @@ function useEffectAsync(effect, inputs = []) {
 }
 
 const isUserSpotifyEmpty = userSpotify => {
-  // Returns true if theres any issues
-  const errors = Object.keys(userSpotify).map(key => {
-    const value = userSpotify[key];
-    if (value instanceof Array && value.length === 0) {
-      return true;
-    }
+  // Creates an array full of booleans if there are any issues
+  // Then filters out all the non-true errors
+  const errors = Object.keys(userSpotify)
+    .map(key => {
+      const value = userSpotify[key];
+      if (value instanceof Array && value.length === 0) {
+        return true;
+      }
 
-    return false;
-  });
+      return false;
+    })
+    .filter(errorValue => Boolean(errorValue));
 
-  return Boolean(errors).length === Object.keys(userSpotify).length;
+  // If we have the same amount of errors that we do spotify items
+  // clearly we have no data
+  return errors.length === Object.keys(userSpotify).length;
 };
 
 let firebaseUserListener = undefined;
@@ -85,9 +90,11 @@ const User = ({ match }) => {
 
   // When the user changes (i.e auth info, username, etc), or we dont have a user
   React.useEffect(() => {
+    console.log('User effect', user);
     if (user) {
       // Check if they have no spotify data
       const isSpotifyEmpty = isUserSpotifyEmpty(user.spotify);
+      console.log('Is spotify empty', isSpotifyEmpty);
       if (isSpotifyEmpty) setUserError('NO_DATA');
 
       // Create the timer to fetch spotify data every 20 minutes
@@ -96,6 +103,7 @@ const User = ({ match }) => {
       }, 90 * 1000);
 
       return () => {
+        console.log('User changed effect goodbye');
         // Remove the listener
         if (firebaseUserListener) {
           firebaseUserListener();
@@ -103,7 +111,6 @@ const User = ({ match }) => {
         }
         // Remove the profile from the header
         uiContext.header.showProfile(undefined);
-        console.log('User changed effect goodbye');
         // Remove the refresh timer
         clearInterval(updateSpotifyTimer);
       };
@@ -133,7 +140,7 @@ const User = ({ match }) => {
     <Content>
       <Container>
         {userError && renderUserError()}
-        {user && (
+        {user && !userError && (
           <div id="spotifyContent">
             <NowPlaying song={user.spotify.nowPlaying} />
             <RecentlyPlayed songs={user.spotify.recentlyPlayed} />

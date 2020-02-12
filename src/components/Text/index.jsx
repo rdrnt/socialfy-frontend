@@ -50,6 +50,12 @@ export const DefaultTextStyles = {
   `,
   p: css`
     font-size: 16px;
+    line-height: 20px;
+
+    ${Style.size.mobile`
+      font-size: 13px;
+      line-height: 17px;
+    `};
   `,
   span: css`
     font-size: 11px;
@@ -58,6 +64,13 @@ export const DefaultTextStyles = {
   `,
   a: css`
     font-size: 16px;
+    line-height: 20px;
+
+    ${Style.size.mobile`
+      font-size: 13px;
+      line-height: 17px;
+    `};
+
     text-decoration: none;
 
     &:hover {
@@ -72,8 +85,6 @@ const StyledText = styled.h1`
   margin: 0;
   padding: 0;
   color: white;
-  font-weight: normal;
-  line-height: 1;
 
   ${props => DefaultTextStyles[props.useTagStyle]};
 

@@ -42,7 +42,6 @@ const Content = styled.div`
   justify-content: space-between;
   height: 100%;
   width: 100%;
-  padding: ${config.spacing}px 0;
 `;
 
 const SearchIcon = styled(NavLink)`
