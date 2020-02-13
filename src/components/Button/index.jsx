@@ -11,7 +11,7 @@ const Container = styled.button`
   border: none;
   margin: 0;
   padding: ${config.spacing}px;
-  border-radius: 25px;
+  border-radius: 35px;
 
   > span {
     color: black;

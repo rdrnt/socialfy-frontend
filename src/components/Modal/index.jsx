@@ -48,9 +48,9 @@ const StyledDialogOverlay = styled(DialogOverlay)`
     height: 75%;
     width: 50%;
     ${Style.size.mobile`
-    height: 90%;
-    width: 100%;
-  `}
+      height: 100%;
+      width: 100%;
+    `};
   }
 `;
 

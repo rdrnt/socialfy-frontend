@@ -11,7 +11,7 @@ import config from '../../../config';
 import { Environment } from '../../../helpers';
 
 const Content = styled.div`
-  height: 75%;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -28,6 +28,7 @@ const ButtonRow = styled.div`
   align-items: center;
   justify-content: space-evenly;
   > * {
+    min-width: 120px;
     margin: 0 ${config.spacing}px;
   }
 `;

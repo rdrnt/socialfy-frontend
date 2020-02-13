@@ -92,7 +92,7 @@ const Header = () => {
           {header.profileToShow && (
             <HeaderProfileContent
               profile={header.profileToShow}
-              openModal={modal.openModal}
+              openModal={modal.show}
             />
           )}
         </Layout>
