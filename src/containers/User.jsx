@@ -11,8 +11,8 @@ import {
 } from '../components/SpotifyWidget';
 import { UIContext } from '../contexts';
 
-import { Firebase, API } from '../helpers';
-import useFirebaseUser from '../hooks/useFirebaseUser';
+import { API } from '../helpers';
+import { useFirebaseUser } from '../hooks';
 
 const Content = styled.div`
   height: 100%;
