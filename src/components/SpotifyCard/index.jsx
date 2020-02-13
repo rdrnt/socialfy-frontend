@@ -29,6 +29,13 @@ const Content = styled(motion.div)`
     margin-right: 10px;
   }
 
+  > p {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   > img {
     border-radius: 2px;
     margin-bottom: 5px;
