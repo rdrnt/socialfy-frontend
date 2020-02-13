@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
+import { useViewportScroll, useTransform } from 'framer-motion';
 
 import Container from '../container';
 import Text from '../Text';
@@ -20,7 +21,7 @@ const Root = styled.header`
   background-color: ${config.colors.background};
   color: white;
   border-bottom: ${props =>
-    `1px solid rgba(255, 255, 255, ${props.borderOpacity})`};
+    `1px solid rgba(244, 244, 244, ${props.borderOpacity})`};
 
   /* The container */
   > div {
@@ -61,29 +62,20 @@ const Title = styled(Link)`
   color: white;
 `;
 
+// For scrolling related docs, see
+// https://www.framer.com/api/motion/motionvalue/#useviewportscroll
+
 const Header = () => {
   const { header, modal } = React.useContext(UIContext);
 
-  const onScroll = () => {
-    const value = window.scrollY;
-    if (value >= 0 && value <= 201) {
-      // Get the scroll value from 0.0-0.99
-      const fixedValue = value / 2 / 100;
-      header.setBorderOpacity(fixedValue);
-    } else if (value > 100 && header.borderOpacity !== 1) {
-      header.setBorderOpacity(1);
-    }
-  };
+  const { scrollYProgress } = useViewportScroll();
+  const yScrollValue = useTransform(scrollYProgress, [0, 0.9], [0, 1]);
 
   React.useEffect(() => {
-    if (window) {
-      window.addEventListener('scroll', onScroll);
-
-      return () => {
-        window.removeEventListener('scroll', onScroll);
-      };
-    }
-  }, []);
+    return yScrollValue.onChange(value => {
+      header.setBorderOpacity(value);
+    });
+  }, [yScrollValue]);
 
   return (
     <Root borderOpacity={header.borderOpacity}>
