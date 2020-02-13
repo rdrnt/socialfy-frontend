@@ -24,12 +24,6 @@ const Content = styled.div`
   }
 `;
 
-function useEffectAsync(effect, inputs = []) {
-  React.useEffect(() => {
-    effect();
-  }, inputs);
-}
-
 const isUserSpotifyEmpty = userSpotify => {
   // Creates an array full of booleans if there are any issues
   // Then filters out all the non-true errors
