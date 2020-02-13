@@ -51,31 +51,19 @@ const SongInfo = styled.div`
 `;
 
 const NowPlaying = ({ song, ...rest }) => {
-  return (
-    <SpotifyWidgetLayout title="Now Playing" error={!Boolean(song)} {...rest}>
+  return song ? (
+    <SpotifyWidgetLayout title="Now Playing" error={!song} {...rest}>
       <Content>
-        {song ? (
-          <>
-            <AlbumArt src={song.album.albumArt} alt="album art" />
-            <SongInfo>
-              <Text as="h3">{song.name}</Text>
-              <Text as="span">
-                <ArtistNames artists={song.artists} tagStyle="p" />
-              </Text>
-            </SongInfo>
-          </>
-        ) : (
-          <>
-            <AlbumArt src={NoSpotifyImage} alt="album art" />
-            <SongInfo>
-              <Text as="h3">No song playing</Text>
-              <Text as="span">Unavailable</Text>
-            </SongInfo>
-          </>
-        )}
+        <AlbumArt src={song.album.albumArt} alt="album art" />
+        <SongInfo>
+          <Text as="h3">{song.name}</Text>
+          <Text as="span">
+            <ArtistNames artists={song.artists} tagStyle="p" />
+          </Text>
+        </SongInfo>
       </Content>
     </SpotifyWidgetLayout>
-  );
+  ) : null;
 };
 
 NowPlaying.propTypes = {

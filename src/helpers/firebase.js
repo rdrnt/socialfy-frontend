@@ -14,7 +14,8 @@ const Firebase = {
       : firebaseProdConfig;
     firebase.initializeApp(configToUse);
   },
-  getUser: async username => {
+  getInstance: () => firebase,
+  getUserDoc: async username => {
     try {
       const userDocQuery = await firebase
         .firestore()
@@ -23,7 +24,7 @@ const Firebase = {
         .get();
 
       if (userDocQuery.docs[0]) {
-        return userDocQuery.docs[0].data();
+        return userDocQuery.docs[0];
       }
 
       return undefined;
@@ -32,15 +33,6 @@ const Firebase = {
       return undefined;
     }
   },
-  onUserChanged: ({ id, onChange }) =>
-    firebase
-      .firestore()
-      .collection('users')
-      .doc(id)
-      .onSnapshot(userSnapshot => {
-        const userData = userSnapshot.data();
-        onChange(userData);
-      }),
   getUsersFromResult: async (searchValue = '') => {
     // https://stackoverflow.com/a/56815787/5314646
     const matchingUserDocs = await firebase

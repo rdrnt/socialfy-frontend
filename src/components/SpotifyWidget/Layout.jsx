@@ -47,15 +47,18 @@ const animationVariant = {
   },
 };
 
-const SpotifyWidgetLayout = ({ children, title, error }) => (
+const SpotifyWidgetLayout = ({ children, title, error = false }) => (
   <Container
-    key={title}
     variants={animationVariant}
     initial="hidden"
     animate={error ? 'hidden' : 'visible'}
   >
-    <Text as="h2">{title}</Text>
-    {children}
+    {!error && (
+      <>
+        <Text as="h2">{title}</Text>
+        {children}
+      </>
+    )}
   </Container>
 );
 

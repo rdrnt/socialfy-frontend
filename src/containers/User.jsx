@@ -12,6 +12,7 @@ import {
 import { UIContext } from '../contexts';
 
 import { Firebase, API } from '../helpers';
+import useFirebaseUser from '../hooks/useFirebaseUser';
 
 const Content = styled.div`
   height: 100%;
@@ -48,12 +49,8 @@ const isUserSpotifyEmpty = userSpotify => {
   return errors.length === Object.keys(userSpotify).length;
 };
 
-let firebaseUserListener = undefined;
-
 const User = ({ match }) => {
-  const [user, setUser] = React.useState(undefined);
   const [userError, setUserError] = React.useState(''); // can be 'NOT_FOUND', 'NO_DATA'
-
   const uiContext = React.useContext(UIContext);
 
   const refreshUserSpotify = async userToRefresh => {
@@ -61,37 +58,22 @@ const User = ({ match }) => {
     await API.refreshUserSpotifyInfo(userToRefresh.profile.username);
   };
 
-  // Runs when we get a new username in the url
-  useEffectAsync(async () => {
-    // Get the username to search for
-    const usernameToSearch = match.params.userId;
-    // Get the users firebase profile
-    const firebaseUser = await Firebase.getUser(usernameToSearch);
+  const onNewUser = async (previousUser, newUser) => {
+    // Set the header to show the profile
+    uiContext.header.showProfile(newUser.profile);
+    // Refresh their spotify on first load
+    await refreshUserSpotify(newUser);
+  };
 
-    // If we have a user, initialize the user listener & set initial data
-    if (firebaseUser) {
-      // Refresh their spotify on first load
-      await refreshUserSpotify(firebaseUser);
-      // Set the header to show the profile
-      uiContext.header.showProfile(firebaseUser.profile);
-      // Close the close the loader
-      uiContext.loader.close();
-      // Initialize the listener
-      firebaseUserListener = Firebase.onUserChanged({
-        id: firebaseUser.id,
-        onChange: changedUser => {
-          setUser(changedUser);
-        },
-      });
-    } else {
-      setUserError('NOT_FOUND');
-    }
-  }, [match.params.userId]);
+  const user = useFirebaseUser(match.params.userId, onNewUser);
 
-  // When the user changes (i.e auth info, username, etc), or we dont have a user
   React.useEffect(() => {
-    console.log('User effect', user);
     if (user) {
+      // Close the loader if it's open
+      if (uiContext.loader.open) {
+        uiContext.loader.close();
+      }
+
       // Check if they have no spotify data
       const isSpotifyEmpty = isUserSpotifyEmpty(user.spotify);
       console.log('Is spotify empty', isSpotifyEmpty);
@@ -103,25 +85,21 @@ const User = ({ match }) => {
       }, 90 * 1000);
 
       return () => {
-        console.log('User changed effect goodbye');
-        // Remove the listener
-        if (firebaseUserListener) {
-          firebaseUserListener();
-          firebaseUserListener = undefined;
-        }
-        // Remove the profile from the header
-        uiContext.header.showProfile(undefined);
         // Remove the refresh timer
         clearInterval(updateSpotifyTimer);
+
+        // Remove the profile from the header
+        uiContext.header.showProfile(undefined);
       };
     }
   }, [user]);
 
   React.useEffect(() => {
+    // If when loading the page we have no error and no user, show the loader
     if (userError === '' && !user) {
-      // open the laoder
       uiContext.loader.show('Loading...');
     } else if (userError !== '') {
+      // if we have no user error, close the loader
       uiContext.loader.close();
     }
   }, [user, userError]);
