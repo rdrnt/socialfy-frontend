@@ -22,6 +22,7 @@ const Root = styled.header`
   color: white;
   border-bottom: ${props =>
     `1px solid rgba(244, 244, 244, ${props.borderOpacity})`};
+  z-index: ${config.zIndex.header};
 
   /* The container */
   > div {

@@ -19,6 +19,7 @@ const Content = styled.div`
   ${Style.size.mobile`
     flex-direction: column;
     align-items: flex-start;
+    justify-content: space-evenly;
   `}
 `;
 
@@ -28,8 +29,8 @@ const AlbumArt = styled.img`
   background-color: ${config.colors.primary};
 
   ${Style.size.mobile`
-    width: 100%;
-    height: 80%;
+    height: 225px;
+    width: 225px;
   `};
 
   margin: 0 10px 0 0;
@@ -37,10 +38,19 @@ const AlbumArt = styled.img`
 
 const SongInfo = styled.div`
   display: flex;
-  flex-grow: 1;
+  width: 100%;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+
+  ${Style.size.mobile`
+    > h3 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+  `};
 
   > p {
     ${Style.size.mobile`

@@ -1,30 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import SpotifyWidgetLayout from '../Layout';
 
 import NowPlayingInfo from './Info';
 import SlideIndicator from './SlideIndicator';
 
-import Icon from '../../Icon';
-
 const Layout = styled.div`
-  height: 325px;
+  height: 275px;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-`;
-
-const SideButton = styled.button`
-  height: 100%;
-  width: 10%;
-  padding: 0;
-  margin: 0;
-  border: none;
-  background-color: green;
+  position: relative;
 `;
 
 const Slide1 = styled.div`
@@ -39,23 +30,43 @@ const Slide2 = styled.div`
   background-color: blue;
 `;
 
+const slideAnimation = {
+  transition: {
+    duration: 0.3,
+  },
+  initial: {
+    opacity: 0,
+    x: 50,
+  },
+  animate: {
+    opacity: 1,
+    x: 0,
+  },
+  exit: {
+    opacity: 0,
+    x: -50,
+  },
+};
+
 const NowPlaying = ({ song, ...rest }) => {
   const [currentSlide, setNextSlide] = React.useState(0);
   const [amountOfSlides, setAmountOfSlides] = React.useState(0);
 
-  const goToNextSlide = () => {
-    if (currentSlide === amountOfSlides) {
-      setNextSlide(0);
-    } else {
-      setNextSlide(currentSlide + 1);
+  const switchSlide = type => {
+    if (type === 'next') {
+      if (currentSlide === amountOfSlides) {
+        setNextSlide(0);
+      } else {
+        setNextSlide(currentSlide + 1);
+      }
     }
-  };
 
-  const goToPreviousSlide = () => {
-    if (currentSlide === 0) {
-      setNextSlide(amountOfSlides);
-    } else {
-      setNextSlide(currentSlide - 1);
+    if (type === 'previous') {
+      if (currentSlide === 0) {
+        setNextSlide(amountOfSlides);
+      } else {
+        setNextSlide(currentSlide - 1);
+      }
     }
   };
 
@@ -73,30 +84,30 @@ const NowPlaying = ({ song, ...rest }) => {
     }
   }, [song]);
 
-  const renderSlideContent = () => {
-    const getSlide = () => {
-      switch (currentSlide) {
+  const renderSlide = (slideIndex, props) => {
+    const getSlide = index => {
+      switch (index) {
         case 0:
-          return <NowPlayingInfo song={song} />;
+          return <NowPlayingInfo song={song} {...props} />;
         case 1:
-          return <Slide1 />;
+          return <Slide1 {...props} />;
         case 2:
-          return <Slide2 />;
+          return <Slide2 {...props} />;
         default:
           return null;
       }
     };
 
     return (
-      <>
-        <SideButton onClick={goToPreviousSlide}>
-          <Icon name="x" />
-        </SideButton>
-        {getSlide()}
-        <SideButton onClick={goToNextSlide}>
-          <Icon name="x" />
-        </SideButton>
-      </>
+      <AnimatePresence exitBeforeEnter={true} initial={false}>
+        <motion.div
+          key={slideIndex}
+          {...slideAnimation}
+          style={{ height: '100%', width: '100%' }}
+        >
+          {getSlide(slideIndex)}
+        </motion.div>
+      </AnimatePresence>
     );
   };
 
@@ -105,7 +116,7 @@ const NowPlaying = ({ song, ...rest }) => {
       {/* If we have slides, render the slide content. If not, render the now playing */}
       <Layout>
         {amountOfSlides > 0 ? (
-          renderSlideContent()
+          renderSlide(currentSlide)
         ) : (
           <NowPlayingInfo song={song} />
         )}
@@ -114,6 +125,7 @@ const NowPlaying = ({ song, ...rest }) => {
         <SlideIndicator
           current={currentSlide}
           numberOfSlides={amountOfSlides}
+          switchSlide={switchSlide}
         />
       )}
     </SpotifyWidgetLayout>

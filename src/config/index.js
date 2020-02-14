@@ -19,6 +19,7 @@ const config = {
   spacing: 12,
   zIndex: {
     MAX: 999,
+    header: 2,
   },
 };
 

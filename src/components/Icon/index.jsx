@@ -2,6 +2,7 @@ import React from 'react';
 import { AiOutlineQrcode } from 'react-icons/ai';
 import { MdSearch, MdClose } from 'react-icons/md';
 import { FaSpotify } from 'react-icons/fa';
+import { IoMdArrowForward, IoMdArrowBack } from 'react-icons/io';
 
 import config from '../../config';
 
@@ -10,6 +11,8 @@ const IconTable = {
   search: <MdSearch />,
   x: <MdClose />,
   spotify: <FaSpotify />,
+  'arrow-left': <IoMdArrowBack />,
+  'arrow-right': <IoMdArrowForward />,
 };
 
 const useHover = () => {
@@ -25,7 +28,14 @@ const useHover = () => {
   return [hovering, returnValues];
 };
 
-const Icon = ({ name = '', size = 25, color = 'white', onClick, children }) => {
+const Icon = ({
+  name = '',
+  size = 25,
+  color = 'white',
+  onClick,
+  disableHover = false,
+  children,
+}) => {
   const IconForName = IconTable[name];
 
   const [hovering, hoverProps] = useHover();
@@ -34,7 +44,7 @@ const Icon = ({ name = '', size = 25, color = 'white', onClick, children }) => {
     ? React.cloneElement(
         IconForName,
         {
-          color: hovering ? config.colors.primary : color,
+          color: hovering && !disableHover ? config.colors.primary : color,
           size,
           onClick,
           ...hoverProps,
