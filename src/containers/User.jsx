@@ -53,8 +53,6 @@ const User = ({ match }) => {
   };
 
   const onNewUser = async (previousUser, newUser) => {
-    // Set the header to show the profile
-    uiContext.header.showProfile(newUser.profile);
     // Refresh their spotify on first load
     await refreshUserSpotify(newUser);
   };
@@ -66,6 +64,11 @@ const User = ({ match }) => {
       // Close the loader if it's open
       if (uiContext.loader.open) {
         uiContext.loader.close();
+      }
+
+      // If the header isn't showing the profile, show it
+      if (!uiContext.header.profileToShow) {
+        uiContext.header.showProfile(user.profile);
       }
 
       // Check if they have no spotify data
