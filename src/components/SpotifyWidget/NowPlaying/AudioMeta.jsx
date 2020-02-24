@@ -20,6 +20,7 @@ const Container = styled.div`
 const Stat = styled.div`
   display: flex;
   flex-basis: 33%;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -28,8 +29,7 @@ const Stat = styled.div`
   }
 
   &:not(:first-child):not(:last-child) {
-    flex-grow: 1;
-    margin: 0 ${config.spacing}px;
+    padding: 0 ${config.spacing}px;
   }
 
   &:first-child {
@@ -44,8 +44,8 @@ const Stat = styled.div`
     flex-direction: column;
 
     &:not(:first-child):not(:last-child) {
-      flex-grow: 1;
-      margin: ${config.spacing}px 0;
+      padding: ${config.spacing}px 0;
+      padding-top: 0;
     }
 
     &:first-child {
@@ -103,7 +103,7 @@ const AudioMeta = ({ stats }) => {
     <Container>
       <Stat>
         <Text as="h5">bpm</Text>
-        <Text as="span">the song temp</Text>
+        <Text as="span">the song tempo</Text>
         <Text as="p">{stats.bpm}</Text>
       </Stat>
       <Stat>

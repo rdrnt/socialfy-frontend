@@ -48,8 +48,6 @@ const NowPlaying = ({ song, ...rest }) => {
   const [currentSlide, setNextSlide] = React.useState(0);
   const [amountOfSlides, setAmountOfSlides] = React.useState(0);
 
-  console.log('Now playing song', song);
-
   const switchSlide = type => {
     if (type === 'next') {
       if (currentSlide === amountOfSlides) {
