@@ -47,6 +47,9 @@ const SlideButton = styled.button`
   background-color: ${config.colors.primary};
   padding: 0;
   margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const animations = {
@@ -65,7 +68,7 @@ const SlideIndicator = ({ current, numberOfSlides, switchSlide }) => {
         <SlideButton onClick={() => switchSlide('previous')}>
           <Icon
             name="arrow-left"
-            size={15}
+            size={13}
             color={config.colors.background}
             disableHover={true}
           />
@@ -84,7 +87,7 @@ const SlideIndicator = ({ current, numberOfSlides, switchSlide }) => {
         <SlideButton onClick={() => switchSlide('next')}>
           <Icon
             name="arrow-right"
-            size={15}
+            size={13}
             color={config.colors.background}
             disableHover={true}
           />
