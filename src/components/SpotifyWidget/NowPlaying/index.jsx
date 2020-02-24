@@ -7,6 +7,8 @@ import SpotifyWidgetLayout from '../Layout';
 
 import NowPlayingInfo from './Info';
 import SlideIndicator from './SlideIndicator';
+import AudioStats from './AudioStats';
+import AudioMeta from './AudioMeta';
 
 const Layout = styled.div`
   height: 275px;
@@ -16,12 +18,6 @@ const Layout = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-`;
-
-const Slide1 = styled.div`
-  height: 100%;
-  width: 100%;
-  background-color: red;
 `;
 
 const Slide2 = styled.div`
@@ -51,6 +47,8 @@ const slideAnimation = {
 const NowPlaying = ({ song, ...rest }) => {
   const [currentSlide, setNextSlide] = React.useState(0);
   const [amountOfSlides, setAmountOfSlides] = React.useState(0);
+
+  console.log('Now playing song', song);
 
   const switchSlide = type => {
     if (type === 'next') {
@@ -84,15 +82,15 @@ const NowPlaying = ({ song, ...rest }) => {
     }
   }, [song]);
 
-  const renderSlide = (slideIndex, props) => {
+  const renderSlide = (slideIndex, nowPlaying) => {
     const getSlide = index => {
       switch (index) {
         case 0:
-          return <NowPlayingInfo song={song} {...props} />;
+          return <NowPlayingInfo song={nowPlaying} />;
         case 1:
-          return <Slide1 {...props} />;
+          return <AudioStats stats={nowPlaying.stats.audio} />;
         case 2:
-          return <Slide2 {...props} />;
+          return <AudioMeta stats={nowPlaying.stats.meta} />;
         default:
           return null;
       }
@@ -116,7 +114,7 @@ const NowPlaying = ({ song, ...rest }) => {
       {/* If we have slides, render the slide content. If not, render the now playing */}
       <Layout>
         {amountOfSlides > 0 ? (
-          renderSlide(currentSlide)
+          renderSlide(currentSlide, song)
         ) : (
           <NowPlayingInfo song={song} />
         )}

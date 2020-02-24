@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlineQrcode } from 'react-icons/ai';
 import { MdSearch, MdClose } from 'react-icons/md';
-import { FaSpotify } from 'react-icons/fa';
+import { FaSpotify, FaPlay, FaPause } from 'react-icons/fa';
 import { IoMdArrowForward, IoMdArrowBack } from 'react-icons/io';
 
 import config from '../../config';
@@ -13,6 +13,8 @@ const IconTable = {
   spotify: <FaSpotify />,
   'arrow-left': <IoMdArrowBack />,
   'arrow-right': <IoMdArrowForward />,
+  play: <FaPlay />,
+  pause: <FaPause />,
 };
 
 const useHover = () => {
