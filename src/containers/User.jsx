@@ -67,7 +67,7 @@ const User = ({ match }) => {
       }
 
       // If the header isn't showing the profile, show it
-      if (!uiContext.header.profileToShow) {
+      if (uiContext.header.profileToShow === undefined) {
         uiContext.header.showProfile(user.profile);
       }
 
