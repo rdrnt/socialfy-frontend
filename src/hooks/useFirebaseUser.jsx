@@ -13,7 +13,7 @@ const useFirebaseUser = (username, onNewUser = () => {}) => {
   // If the username given param changes
   useEffectAsync(async () => {
     const userDoc = await Firebase.getUserDoc(username);
-    if (userDoc.exists) {
+    if (userDoc && userDoc.exists) {
       let listener = userDoc.ref.onSnapshot(userSnapshot => {
         const userData = userSnapshot.data();
         setUser(userData);

@@ -88,18 +88,20 @@ const User = ({ match }) => {
         // Remove the profile from the header
         uiContext.header.showProfile(undefined);
       };
+    } else if (!user && userError === 'NOT_FOUND') {
+      setUserError('NOT_FOUND');
     }
   }, [user]);
 
   React.useEffect(() => {
-    // If when loading the page we have no error and no user, show the loader
-    if (userError === '' && !user) {
-      uiContext.loader.show('Loading...');
-    } else if (userError !== '') {
-      // if we have no user error, close the loader
+    if (userError) {
       uiContext.loader.close();
     }
-  }, [user, userError]);
+  }, [userError]);
+
+  React.useEffect(() => {
+    uiContext.loader.show('Loading...');
+  }, []);
 
   const renderUserError = () => {
     if (userError === 'NOT_FOUND') {
