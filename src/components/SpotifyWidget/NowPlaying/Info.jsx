@@ -33,7 +33,7 @@ const AlbumArt = styled.img`
     width: 225px;
   `};
 
-  margin: 0 10px 0 0;
+  margin: 0 ${config.spacing}px 0 0;
 `;
 
 const SongInfo = styled.div`
@@ -54,7 +54,7 @@ const SongInfo = styled.div`
 
   > p {
     ${Style.size.mobile`
-      margin-top: 5px;
+      margin-top: ${config.spacing / 2}px;
     `}
   }
 `;
