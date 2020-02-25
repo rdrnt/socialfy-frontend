@@ -44,31 +44,31 @@ const Stat = styled.div`
     flex-direction: column;
 
     &:not(:first-child):not(:last-child) {
-      padding: ${config.spacing}px 0;
-      padding-top: 0;
+      padding: ${config.spacing / 2}px 0;
     }
 
     &:first-child {
       border-right: none;
       border-bottom: 1px solid white;
+      padding-bottom: ${config.spacing / 2}px;
     }
 
     &:last-child {
       border-left: none;
       border-top: 1px solid white;
+      padding-top: ${config.spacing / 2}px;
     }
   `};
 `;
 
 const PlayerButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
   background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: ${config.spacing / 2}px;
 
   &:hover {
     > svg {
@@ -112,7 +112,7 @@ const AudioMeta = ({ stats }) => {
           <Icon
             name={player.playing ? 'pause' : 'play'}
             color={config.colors.background}
-            size={17}
+            size={15}
           />
         </PlayerButton>
       </Stat>

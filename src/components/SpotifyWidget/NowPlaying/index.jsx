@@ -11,7 +11,7 @@ import AudioStats from './AudioStats';
 import AudioMeta from './AudioMeta';
 
 const Layout = styled.div`
-  height: 275px;
+  height: 300px;
   width: 100%;
   display: flex;
   flex-direction: row;

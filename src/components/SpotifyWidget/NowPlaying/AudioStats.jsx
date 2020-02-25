@@ -19,6 +19,7 @@ const Container = styled.div`
 const Stat = styled.div`
   display: flex;
   flex-basis: 33%;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -28,7 +29,7 @@ const Stat = styled.div`
 
   &:not(:first-child):not(:last-child) {
     flex-grow: 1;
-    margin: 0 ${config.spacing}px;
+    padding: 0 ${config.spacing}px;
   }
 
   &:first-child {
@@ -44,17 +45,19 @@ const Stat = styled.div`
 
     &:not(:first-child):not(:last-child) {
       flex-grow: 1;
-      margin: ${config.spacing}px 0;
+      padding: ${config.spacing / 2}px 0;
     }
 
     &:first-child {
       border-right: none;
       border-bottom: 1px solid white;
+      padding-bottom: ${config.spacing / 2}px;
     }
 
     &:last-child {
       border-left: none;
       border-top: 1px solid white;
+      padding-top: ${config.spacing / 2}px;
     }
   `};
 `;
