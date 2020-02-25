@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { motion, AnimatePresence } from 'framer-motion';
 
 import Text from '../../Text';
 import Button from '../../Button';

@@ -20,12 +20,6 @@ const Layout = styled.div`
   position: relative;
 `;
 
-const Slide2 = styled.div`
-  height: 100%;
-  width: 100%;
-  background-color: blue;
-`;
-
 const slideAnimation = {
   transition: {
     duration: 0.3,

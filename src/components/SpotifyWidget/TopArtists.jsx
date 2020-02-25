@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { AnimatePresence } from 'framer-motion';
 
 import SpotifyWidgetLayout, { listItemAnimationProps } from './Layout';
 import SpotifyCard from '../SpotifyCard';

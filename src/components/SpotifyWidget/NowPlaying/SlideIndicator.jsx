@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import config from '../../../config';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Style } from '../../../helpers';
+import { motion } from 'framer-motion';
+
 import Icon from '../../Icon';
 
 const Container = styled.div`
