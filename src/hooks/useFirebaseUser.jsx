@@ -9,6 +9,12 @@ function useEffectAsync(effect, inputs = []) {
 
 const useFirebaseUser = (username, onNewUser = () => {}) => {
   const [user, setUser] = React.useState(undefined);
+  const [loading, setLoading] = React.useState(true);
+
+  const setUserFromSnapshot = userData => {
+    setUser(userData);
+    setLoading(false);
+  };
 
   // If the username given param changes
   useEffectAsync(async () => {
@@ -16,12 +22,13 @@ const useFirebaseUser = (username, onNewUser = () => {}) => {
     if (userDoc && userDoc.exists) {
       let listener = userDoc.ref.onSnapshot(userSnapshot => {
         const userData = userSnapshot.data();
-        setUser(userData);
 
         // if we didn't already have a user, and the new user exists
-        if (!user && userSnapshot.exists) {
+        if (!user) {
           onNewUser(user, userData);
         }
+
+        setUserFromSnapshot(userData);
       });
 
       return () => {
@@ -30,12 +37,14 @@ const useFirebaseUser = (username, onNewUser = () => {}) => {
           listener();
           listener = undefined;
         }
-        setUser(undefined);
+        setUserFromSnapshot(undefined);
       };
+    } else if (!userDoc) {
+      setUserFromSnapshot(undefined);
     }
   }, [username]);
 
-  return user;
+  return [user, loading];
 };
 
 export default useFirebaseUser;

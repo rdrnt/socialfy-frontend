@@ -46,6 +46,10 @@ export const UIContextProvider = props => {
   const closeModal = () => {
     setModalState({ open: false, type: '', extra: {} });
   };
+
+  React.useEffect(() => {
+    console.log('Show profile', headerShowProfile);
+  }, [headerShowProfile]);
   return (
     <UIContext.Provider
       value={{

@@ -48,7 +48,7 @@ const Home = () => {
   return (
     <Content>
       <Container>
-        <Text as="h1">Share what you're currently jamming too.</Text>
+        <Text as="h1">Your Spotify listening, more social.</Text>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { delay: 1, duration: 1 } }}

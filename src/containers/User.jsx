@@ -53,18 +53,17 @@ const User = ({ match }) => {
   };
 
   const onNewUser = async (previousUser, newUser) => {
+    console.log('New user loaded');
     // Refresh their spotify on first load
     await refreshUserSpotify(newUser);
   };
 
-  const user = useFirebaseUser(match.params.userId, onNewUser);
+  const [user, loading] = useFirebaseUser(match.params.userId, onNewUser);
 
   React.useEffect(() => {
     if (user) {
-      // Close the loader if it's open
-      if (uiContext.loader.open) {
-        uiContext.loader.close();
-      }
+      // Set the user error to nothing
+      setUserError('');
 
       // If the header isn't showing the profile, show it
       if (uiContext.header.profileToShow === undefined) {
@@ -73,7 +72,6 @@ const User = ({ match }) => {
 
       // Check if they have no spotify data
       const isSpotifyEmpty = isUserSpotifyEmpty(user.spotify);
-      console.log('Is spotify empty', isSpotifyEmpty);
       if (isSpotifyEmpty) setUserError('NO_DATA');
 
       // Create the timer to fetch spotify data every 20 minutes
@@ -88,20 +86,19 @@ const User = ({ match }) => {
         // Remove the profile from the header
         uiContext.header.showProfile(undefined);
       };
-    } else if (!user && userError === 'NOT_FOUND') {
+    } else if (!user && !userError) {
+      // If we don't have a user, and the error message isnt set
       setUserError('NOT_FOUND');
     }
   }, [user]);
 
   React.useEffect(() => {
-    if (userError) {
+    if (loading) {
+      uiContext.loader.show('Loading...');
+    } else if (!loading) {
       uiContext.loader.close();
     }
-  }, [userError]);
-
-  React.useEffect(() => {
-    uiContext.loader.show('Loading...');
-  }, []);
+  }, [loading]);
 
   const renderUserError = () => {
     if (userError === 'NOT_FOUND') {
@@ -113,7 +110,7 @@ const User = ({ match }) => {
     return null;
   };
 
-  return (
+  return loading ? null : (
     <Content>
       <Container>
         {userError && renderUserError()}
