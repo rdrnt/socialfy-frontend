@@ -48,12 +48,10 @@ const User = ({ match }) => {
   const uiContext = React.useContext(UIContext);
 
   const refreshUserSpotify = async userToRefresh => {
-    console.log('Refreshing user spotify...');
     await API.refreshUserSpotifyInfo(userToRefresh.profile.username);
   };
 
   const onNewUser = async (previousUser, newUser) => {
-    console.log('New user loaded');
     // Refresh their spotify on first load
     await refreshUserSpotify(newUser);
   };
@@ -82,9 +80,6 @@ const User = ({ match }) => {
       return () => {
         // Remove the refresh timer
         clearInterval(updateSpotifyTimer);
-
-        // Remove the profile from the header
-        uiContext.header.showProfile(undefined);
       };
     } else if (!user && !userError) {
       // If we don't have a user, and the error message isnt set
@@ -99,6 +94,16 @@ const User = ({ match }) => {
       uiContext.loader.close();
     }
   }, [loading]);
+
+  // Runs when unmounting
+  React.useEffect(() => {
+    return () => {
+      // If we have a user or the header is showing a profile, remove it
+      if (user || uiContext.header.profileToShow) {
+        uiContext.header.showProfile(undefined);
+      }
+    };
+  }, []);
 
   const renderUserError = () => {
     if (userError === 'NOT_FOUND') {
