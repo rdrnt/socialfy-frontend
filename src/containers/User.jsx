@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Container from '../components/container';
-import Text from '../components/Text';
+import Text, { DefaultTextStyles } from '../components/Text';
 import {
   RecentlyPlayed,
   NowPlaying,
@@ -13,6 +14,7 @@ import { UIContext } from '../contexts';
 
 import { API } from '../helpers';
 import { useFirebaseUser } from '../hooks';
+import config from '../config';
 
 const Content = styled.div`
   height: 100%;
@@ -21,6 +23,24 @@ const Content = styled.div`
   > div {
     height: auto;
     width: 100%;
+  }
+`;
+
+const ErrorContent = styled.div`
+  height: calc(100vh - 70px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  > a {
+    ${DefaultTextStyles.p};
+    color: white;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
@@ -98,21 +118,34 @@ const User = ({ match }) => {
   // Runs when unmounting
   React.useEffect(() => {
     return () => {
-      // If we have a user or the header is showing a profile, remove it
-      if (user || uiContext.header.profileToShow) {
-        uiContext.header.showProfile(undefined);
-      }
+      uiContext.header.showProfile(undefined);
     };
   }, []);
 
   const renderUserError = () => {
-    if (userError === 'NOT_FOUND') {
-      return <Text as="h1">User not found</Text>;
-    }
-    if (userError === 'NO_DATA') {
-      return <Text as="h1">No data for user</Text>;
-    }
-    return null;
+    const getErrorContent = () => {
+      if (userError === 'NOT_FOUND') {
+        return (
+          <>
+            <Text as="h1">User not found :(</Text>
+            <Link to={config.routes.SEARCH}>Go To Search</Link>
+          </>
+        );
+      }
+      if (userError === 'NO_DATA') {
+        return (
+          <>
+            <Text as="h1">No data for user</Text>
+            <Text as="p">
+              If this issue occurs, please submit a bug report.
+            </Text>
+          </>
+        );
+      }
+      return null;
+    };
+
+    return <ErrorContent>{getErrorContent()}</ErrorContent>;
   };
 
   return loading ? null : (
