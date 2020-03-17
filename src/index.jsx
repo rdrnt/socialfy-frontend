@@ -10,6 +10,7 @@ import { Environment, Analytics, Firebase } from './helpers';
 
 if (Environment.isDevelopment) {
   console.warn('SOCIALFY - RUNNING IN DEVELOPMENT MODE');
+} else {
   Analytics.initialize();
 }
 
