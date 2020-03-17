@@ -1,3 +1,4 @@
 import useFirebaseUser from './useFirebaseUser';
+import usePageViews from './usePageViews';
 
-export { useFirebaseUser };
+export { useFirebaseUser, usePageViews };

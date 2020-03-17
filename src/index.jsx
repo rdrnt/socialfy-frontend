@@ -6,11 +6,14 @@ import './index.css';
 
 import App from './App';
 
-import { Environment } from './helpers';
+import { Environment, Analytics, Firebase } from './helpers';
 
 if (Environment.isDevelopment) {
   console.warn('SOCIALFY - RUNNING IN DEVELOPMENT MODE');
+  Analytics.initialize();
 }
+
+Firebase.initialize();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

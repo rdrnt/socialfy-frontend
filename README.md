@@ -8,6 +8,12 @@ Your Spotify listening, more socially. Share what you're currently listening too
 
 2. You will need a firebase config in `src/config/firebase{env}.json`
 
+3. Add a `.env.local` at the root of the project with the following content:
+
+```
+REACT_APP_GA_ANALYTICS=ANALYTICS KEY
+```
+
 ## How to deploy
 
 1. Make sure Netlify CLI is linked
