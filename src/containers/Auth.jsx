@@ -71,7 +71,7 @@ const Auth = () => {
           The only account information we save is your profile image & username.
         </Text>
         <Text as="p" weight="bold">
-          We do no not see your password or store it.
+          We do not see your password or store it.
         </Text>
 
         <GetStartedButton
